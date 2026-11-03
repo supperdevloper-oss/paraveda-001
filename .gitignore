@@ -24,6 +24,3 @@ public_html/.commission-*.done
 node_modules/
 .php-runtime/
 *.log
-
-# deliverables copies are generated from public_html/*
-deliverables/*/index.html
