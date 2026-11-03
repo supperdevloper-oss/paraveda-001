@@ -46,6 +46,13 @@ PORT=9000 ./scripts/dev-server.sh
    → السلوك ما تبدلش.**
 3. `action:'ping'` كان كيرجع `3.83` ثابتة → ولى كيرجع `CRM_API_VERSION`.
 
+## ملف جاهز للرفع (المشكل رقم 1)
+
+`deliverables/fix-version-banner/` فيه `index.html` معدّل جاهز للرفع + `LIRE-MOI.txt`
++ `patch-version-banner.py` (كيصلح أي نسخة أخرى من index.html، idempotent).
+النسخة اللي كترفع كتطابق بايت ببايت `public_html/index.html`
+(SHA256: `4f91ac2d4b00eea2eda126a9cc7d7e3dc5b7584bb18d62709502a2a5e63416a3`).
+
 ## ملاحظات
 
 - `git` كيتجاهل الداتا والسجلات (`crm_data.json`, `journal.log`, `audit.log`,
