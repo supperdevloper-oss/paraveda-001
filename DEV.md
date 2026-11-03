@@ -101,6 +101,25 @@ python3 scripts/build-dark-pages.py --check   # واش محدّث
 
 التباين كامل داز WCAG AA (4.59–16.7:1).
 
+## شريط الحالة فـ الطلبيات (Control Tower)
+
+بدّلنا «شريط الشارع» القديم (`pv-street.jpg` + `pv-rider.png` + `pv-client.png` + أنيميشن
+المشاة) بشريط احترافي **بلا حتى صورة**: SVG + CSS خالص، داكن فـ الوضعين (بحال شاشة
+مراقبة) وسط شريط الأدوات ديال الطلبيات.
+
+```
+python3 scripts/patch-ride-strip.py          # كيبدلو (idempotent، علامات /*PV-RIDE:BEGIN*/)
+python3 scripts/patch-ride-strip.py --check  # واش مطبّق
+```
+
+**فيه:** 4 محطات بالعربية (اتصال → تأكيد → إرسال → توصيل) من اليمين لليسار، كل وحدة
+أيقونة SVG داخل chip بلمعة indigo (والتوصيل بلون emerald)، مسار متقطّع كيتحرك
+(`repeating-linear-gradient` + `background-position`)، شبكة نقطية، وشعاع ضوئي كيدوز
+كل 7 ثوان. كلشي `transform`/`opacity`/`background-position` — خفيف على الـ CPU.
+
+**الوصول:** `@media (max-width:1000px)` كيخبيه (بحال القديم)، و`prefers-reduced-motion`
+كيوقّف كل الأنيميشن. ما كاين حتى تعديل على الداتا ولا على الحسابات.
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
