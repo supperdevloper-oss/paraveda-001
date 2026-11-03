@@ -13,12 +13,15 @@ html[data-pv-theme="dark"]{
   --muted:#93a4bd;
   --red-soft:hsl(0, 58%, 17%);
   --soft:hsl(210, 40%, 17%);
+  --teal-soft:hsl(167, 58%, 17%);
   --text:#e8eef7;
   --violet-soft:hsl(251, 58%, 17%);
 }
 
 html[data-pv-theme="dark"] .btn:hover{border-color:#2b3a56 !important}
 html[data-pv-theme="dark"] .banner .ico{background:#16233a !important}
+html[data-pv-theme="dark"] .crmtag{color:hsl(226, 71%, 72%) !important}
+html[data-pv-theme="dark"] .calctag{color:hsl(263, 69%, 72%) !important}
 html[data-pv-theme="dark"] .rank{color:hsl(23, 82%, 72%) !important}
 html[data-pv-theme="dark"] .rank.r1{background:hsl(48, 58%, 17%) !important;color:hsl(22, 78%, 72%) !important}
 html[data-pv-theme="dark"] .rate .bar{background:hsl(214, 32%, 17%) !important}
@@ -30,6 +33,8 @@ html[data-pv-theme="dark"] .badge.ok{color:hsl(143, 64%, 72%) !important}
 html[data-pv-theme="dark"] .badge.mid{color:hsl(23, 82%, 72%) !important}
 html[data-pv-theme="dark"] .badge.bad{color:hsl(0, 70%, 72%) !important}
 html[data-pv-theme="dark"] .badge.info{color:hsl(226, 71%, 72%) !important}
+html[data-pv-theme="dark"] .audit .hd .ico{background:#16233a !important}
+html[data-pv-theme="dark"] .chip.ok{background:hsl(142, 58%, 17%) !important}
 html[data-pv-theme="dark"] .fstep .b{background:hsl(214, 32%, 17%) !important}
 html[data-pv-theme="dark"] .err{color:hsl(0, 70%, 72%) !important;border:#2b3a56 !important}
 html[data-pv-theme="dark"] .nav a:hover,html[data-pv-theme="dark"] .nav a.on{background:#16233a !important}

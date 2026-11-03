@@ -116,13 +116,36 @@ python3 scripts/build-dark-pages.py               # كيدخل الوضع الل
 **المصدر:** `GET api.php` (header `X-Sync-Token`) → `paraveda_orders_v5` + `paraveda_villes_v2`
 (فrais livraison) + `paraveda_adspend_v1`. الحساب كامل client-side.
 
-**الحسابات (كاملة من الحقول الحقيقية):**
-- مؤكدة = `statut === "Confirmé"` · ملغاة = `"Annulé"` · محاولات = `statut` بحال `Appel-N`
-- مرسلة = livraison ∈ {Livrée, Retour, Remboursé, Expédier vers, Rechange}
-- موصلة = `Livrée` · مرتجعة = `Retour` / `Remboursé`
-- CA = Σ(`prix × qte`) للموصلة · العمولة = Σ(`commission`)
-- تكلفة التوصيل = `paraveda_villes_v2[nom].prix` · المارج = CA − توصيل − عمولات
-- taux livraison = موصلة / مؤكدة · taux retour = مرتجعة / (موصلة + مرتجعة)
+**الحسابات (مطابقة 1:1 لكود الـ CRM فـ `index.html`):**
+
+القاعدة الذهبية: **الطلبيات المحذوفة (`_del`) ما كتدخلش فحتى حساب** (بحال
+`a.filter(o=>!o._del)` فـ الـ SPA). الداتا الخام فيها 349 صف محذوف — كانو كيزيدو
+العدد وبنقصو نسب التحويل.
+
+| مؤشر | القاعدة (نفس السطر فـ index.html) |
+|---|---|
+| مؤكدة | `String(statut ?? "").trim() === "Confirmé"` |
+| ملغاة | `"Annulé"` |
+| Ventes | `Σ (Number(prix) \|\| 0)` ديال المؤكدة — **بلا × qte** |
+| Panier moyen | Ventes ÷ عدد المؤكدة |
+| Taux de conversion | المؤكدة ÷ جميع الطلبيات ديال الفترة × 100 |
+| À contacter | `(statut === "" \|\| /^Appel/i.test(statut)) && livraison === ""` |
+| Suivi nécessaire | `statut ∈ {Rappel, Suivé, Whatssap}` |
+| Prêt pour expédition | `statut === "Confirmé" && livraison === ""` |
+| Risque d'annulation | à contacter + `Date.now() - Date.parse(dateCreation) > 24h` |
+| Livrées | `livraison ∈ {Livrée, Rechange}` (`__pvSold`) |
+| Retours | `livraison ∈ {Retour, Remboursé}` (`__pvBack`) |
+| En transit | `Expédier vers` |
+| Taux livraison | Livrées ÷ Confirmées · Taux retour = Retours ÷ (Livrées + Retours) |
+| Marge estimée | Ventes livrées − frais (`villes[nom].prix`) − `commission` |
+
+**الفترات** بحال الـ CRM (`I4`): اليوم · أمس · هذا الأسبوع (من الاثنين) · هذا الشهر ·
+30 يوم (زيادة) · الكل · مخصص.
+
+**Contrôle de cohérence:** الصفحة كتعاود تحسب 9 مؤشرات بمحرك ثاني (portage حرفي
+ديال الكود الميني ديال الـ CRM: `isC`, `sum`, `__pvKPI`) وتقارنهم — كيبانو
+«✓ 9/9 identiques au CRM». تحقق آلي: اليوم/أمس/الأسبوع/الشهر/الكل = نفس أرقام
+لوحة الـ CRM بالضبط (8/0/0/0، 19/0/1/11، 20/0/1/12، 178/0/1/170 …).
 
 **الأقسام:** KPIs عامة · مقارنة 3 فترات · بطاقات البنات (Livrée/Retour/Expédié/Confirmé +
 محاولات + عمولة) · جدول مقارنة · رسوم (نشاط، CA، تأكيدات، مرتجعات — SVG بلا مكتبة) ·

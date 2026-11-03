@@ -1,115 +1,119 @@
 ════════════════════════════════════════════════════════════════════════
- PARAVEDA CRM — صفحة «Performance» (نسخة 1)
+ PARAVEDA CRM — صفحة «Performance» (نسخة 2 — الأرقام مطابقة للـ CRM)
 ════════════════════════════════════════════════════════════════════════
 
-📌 شنو هي؟
+📌 شنو تبدّل فـ النسخة 2؟
 
-صفحة جديدة كاملة سميتها Performance، كتحسب البنات (الكونفيرماتورات) والمنتجات
-والمبيعات من **الطلبيات الحقيقية** ديال الـ CRM — بلا أرقام مزيفة وبلا قيم
-محطوطة باليد. كل رقم كيتحسب من الحقول: statut، livraison، prix × qte،
-commission، ville (ثمن التوصيل)، adspend.
+النسخة 1 كانت كتحسب بصيغ مختلفة على الـ CRM، وكان تما خطأ. دابا كل رقم
+كيتحسب بنفس السطر البرمجي اللي فـ index.html — وكاين بلوك «Contrôle de
+cohérence» كيقارن رقم برقم ويوري ✓.
 
-كتحمّل داخل الـ CRM بحال Suivi des Retours (iframe)، وكتبان كتبويب جديد
-«📈 Performance» فـ القائمة ديال فوق.
+  ⚠ الغلط الكبير: الطلبيات المحذوفة (_del) — 349 صف — كانو كيتحسبو.
+    الـ CRM كيستعمل دايماً  a.filter(o=>!o._del)  → دابا الصفحة كتدير بحالو:
+    1 702 طلبية حقيقية عوض 2 051.
 
-──────────────────────────────────────────────────────────────────────────
+  ⚠ الغلط الثاني: CA كان = Σ(prix × qte) على «Livrée» فقط.
+    الـ CRM كيدير Σ(Number(prix)) على «Confirmé» — بلا × qte.
+    (30 876 DH كانو زايدين فـ الحساب القديم).
 
-📊 شنو فيها بالضبط
+  ⚠ الثالث: Livrée كانت غير «Livrée» وحدها. الـ CRM كيدير
+    Livrée + Rechange  (__pvSold).
 
- 1. KPI عامة: عدد الطلبيات، مؤكدة + taux، مرسلة، موصلة + taux، مرتجعة + taux،
-    CA موصل، مارج تقديري — مع مقارنة مع الفترة اللي قبلها (▲▼).
+  ⚠ الرابع: «À contacter / Suivi / Prêt / Risque» ما كانوش موجودين أصلاً.
 
- 2. «Période analysée»: اليوم / 7 أيام / 30 يوم فـ نفس الشاشة.
-
- 3. بطاقات البنات: كل بنت عندها كارت فيه:
-      • Taux de confirmation + Taux de livraison (بالبار)
-      • مؤكدة / موصلة / مرتجعة / مرسلة
-      • Commandes / Appels / Annulées / Commission
-      • ترتيب حسب الـ CA + «Panier moyen» + تقييم (Bonne/Moyenne/À travailler)
-
- 4. جدول مقارنة: 13 عمود (تأكيد، توصيل، مرتجع، CA، عمولة، حصة من CA...).
-
- 5. رسوم بيانية (SVG خالص، بلا أي مكتبة خارجية):
-      • نشاط الطلبيات بالنهار
-      • CA الموصل بالنهار
-      • التأكيدات لكل بنت
-      • المرتجعات لكل بنت
-
- 6. المنتجات: شنو كيتباع بجدّية — طلبيات/مؤكدة/موصلة/مرتجعة/نسبة المرتجع/CA
-      + Top produits + Taux de retour par produit.
-
- 7. Produit × Agente: شكون أحسن بنت فـ كل منتج.
-
- 8. المدن (أعلى 12) + المصادر (Facebook/Leader/Google…) + مصاريف الإعلانات
-    وثمن الطلبية المؤكدة.
-
- 9. Tunnel: Assisgnées → Confirmées → Expédiées → Livrées (بالنسب).
-
-10. توزيع محاولات الاتصال (Appel-1 … Appel-6) + توزيع كل الـ statuts.
-
-فلاتر: الفترة (اليوم/أمس/7/30/الشهر/الكل + تاريخ مخصص)، بنت، منتج.
-+ زر «Actualiser» و«Export CSV» (كيصدر جدول البنات).
+  ⚠ الخامس: نسبة التحويل كانت محسوبة على المرسل، دابا = المؤكدة ÷ الجميع.
 
 ──────────────────────────────────────────────────────────────────────────
 
-📦 الملفات فـ هاد المجلد
+🔢 القواعد — منقولة حرفياً من index.html
 
-   performance.html            ← الصفحة (self-contained: HTML+CSS+JS)
-   index.html                  ← التطبيق الرئيسي (فيه التبويب الجديد)
-   pv-dark-pages.css           ← ستايل الوضع الليلي للصفحات (فيها rules ديال Performance)
-   pv-dark-pages-sync.js       ← كيخلي الـ iframe يتبع الاختيار ديال الوضع الليلي
-   apercu-performance-light.jpg ← صورة حقيقية (نهاري)
-   apercu-performance-dark.jpg  ← صورة حقيقية (ليلي)
+  مؤكدة            statut.trim() === "Confirmé"
+  ملغاة            statut.trim() === "Annulé"
+  Ventes           Σ (Number(prix) || 0)  على المؤكدة            ← بلا × qte
+  Panier moyen     Ventes ÷ عدد المؤكدة
+  Taux conversion  المؤكدة ÷ جميع طلبيات الفترة × 100
+  À contacter      (statut === "" || /^Appel/i.test(statut)) && livraison === ""
+  Suivi nécessaire statut ∈ {Rappel, Suivé, Whatssap}
+  Prêt expédition  statut === "Confirmé" && livraison === ""
+  Risque           À contacter && ( Date.now() − Date.parse(dateCreation) > 24h )
+  Livrées          livraison ∈ {Livrée, Rechange}                 (__pvSold)
+  Retours          livraison ∈ {Retour, Remboursé}                (__pvBack)
+  En transit       livraison === "Expédier vers"
+  Taux livraison   Livrées ÷ Confirmées
+  Taux retour      Retours ÷ (Livrées + Retours)
+  Marge estimée    Ventes livrées − frais (villes[nom].prix) − commissions
+
+  الفترات (بحال CRM): اليوم · أمس · هذا الأسبوع (من الاثنين) · هذا الشهر ·
+  30 يوم · الكل · مخصص (تاريخين).
+
+──────────────────────────────────────────────────────────────────────────
+
+✅ التحقق: صفحة Performance ≠ لوحة الـ CRM؟
+
+  البلوك «Contrôle de cohérence» كيعاود يحسب 9 مؤشرات بمحرك ثاني (portage
+  حرفي ديال الكود الميني: isC, sum, __pvKPI) وكيقارن: «✓ 9/9 identiques au CRM».
+
+  تحقق آلي فـ المتصفح (Performance ↔ لوحة CRM، نفس الفترة):
+
+   الفترة      À contacter  Suivi  Prêt  Risque  Ventes        Conversion
+   اليوم        8    = 8     0=0    0=0   0=0    0=0 DH        0.0% = 0.0%
+   أمس         11   = 11     0=0    1=1  11=11   10 618 DH     70.4% = 70.4%
+   هذا الأسبوع 19   = 19     0=0    1=1  11=11   10 618 DH     63.3% = 63.3%
+   هذا الشهر   20   = 20     0=0    1=1  12=12   10 998 DH     63.4% = 63.4%
+   الكل       178  = 178     0=0    1=1 170=170  275 346 DH    75.0% = 75.0%
+
+  ومجموع البنات = المجموع العام بالضبط (104 223 + 71 834 + 63 274 + 18 296
+  + 10 910 + 4 909 + 1 240 + 660 = 275 346 DH).
+
+──────────────────────────────────────────────────────────────────────────
+
+📊 شنو فيها
+
+ 1. «Indicateurs du CRM» — 6 كروت بنفس اسم وصيغة لوحة الـ CRM
+    (À contacter · Suivi · Prêt · Risque · Ventes · Conversion).
+
+ 2. «Résultats opérationnels» — Commandes · Confirmées · Livrées · Retours ·
+    En transit · Marge estimée (+ Ventes livrées / frais / commissions).
+
+ 3. «Contrôle de cohérence» — جدول: المؤشر · القاعدة · رقم الصفحة · رقم محرك
+    التحقق · الفرق (دايماً ✓ 0).
+
+ 4. بطاقات البنات (مرتبة بـ Ventes) + Taux conf/livraison + Livrées/Retours/
+    Expédiées + Appels/Annulées/Commission + Panier moyen.
+
+ 5. جدول مقارنة 13 عمود · رسوم SVG (نشاط، Ventes/نهار، تأكيدات، مرتجعات).
+
+ 6. المنتجات (+ Qté) · Top produits · Taux retour produit · Produit × Agente.
+
+ 7. المدن · المصادر + مصاريف الإعلانات (CPC لكل مؤكدة).
+
+ 8. Tunnel Assignées → Confirmées → Expédiées → Livrées · محاولات Appel-N ·
+    توزيع الـ statuts.
+
+ فلاتر: الفترة · بنت · منتج · Actualiser · Export CSV.
+ كل رقم عليه وسم CRM (صيغة الـ CRM) ولا CALC (مشتق منها).
+
+──────────────────────────────────────────────────────────────────────────
+
+📦 الملفات
+
+   performance.html              ← الصفحة (self-contained)
+   index.html                    ← التطبيق (فيه تبويب Performance)
+   pv-dark-pages.css             ← الوضع الليلي للصفحات (+ rules جديدة)
+   pv-dark-pages-sync.js         ← كيخلي الـ iframe يتبع theme
+   apercu-performance-light.jpg  ← صورة حقيقية (نهاري)
+   apercu-performance-dark.jpg   ← صورة حقيقية (ليلي)
+   apercu-controle-crm.jpg       ← بلوك التحقق مقرّب
    SHA256.txt
    paraveda-performance.zip
 
-──────────────────────────────────────────────────────────────────────────
-
-🚀 التركيب
-
-   رفع 4 ملفات فـ نفس مسار public_html/:
-
-       performance.html
-       index.html
-       pv-dark-pages.css
-       pv-dark-pages-sync.js
-
-   ⚠️ إلا رفعتي غير performance.html: الصفحة كتخدم (performance.html مباشرة)،
-      ولكن التبويب فـ القائمة ما غاديش يبان حيت كاين فـ index.html.
-
-   ⚠️ api.php ما تبدلش — نفس النسخة 3.94.
-
-   الصفحة كتقرا من `GET api.php` بـ header `X-Sync-Token`، وكتحتاج تكون
-   مسجل الدخول (نفس session ديال الـ CRM).
-
-──────────────────────────────────────────────────────────────────────────
-
-🔢 كيفاش كنحسبو (باش تتحقق)
-
-   مؤكدة        = statut === "Confirmé"
-   ملغاة        = statut === "Annulé"
-   محاولات      = statut بحال "Appel-N" (N = عدد المحاولات)
-   مرسلة        = livraison ∈ {Livrée, Retour, Remboursé, Expédier vers, Rechange}
-   موصلة        = livraison === "Livrée"
-   مرتجعة       = livraison ∈ {Retour, Remboursé}
-   CA           = Σ(prix × qte) للطلبيات الموصلة
-   عمولة        = Σ(commission) للطلبيات الموصلة
-   ثمن التوصيل  = paraveda_villes_v2[ville].prix
-   مارج         = CA − ثمن التوصيل − العمولات
-   taux liv.    = موصلة ÷ مؤكدة
-   taux retour  = مرتجعة ÷ (موصلة + مرتجعة)
-
-   مثال (30 يوم الأخيرة 2026-10-05 → 2026-11-03):
-      1 135 طلبية · 624 مؤكدة (55.0%) · 597 مرسلة · 274 موصلة (43.9%)
-      139 مرتجعة (33.7%) · CA 81 471 MAD · Panier moyen 297 MAD
-      Marge estimée 62 661 MAD
-
-──────────────────────────────────────────────────────────────────────────
+🚀 التركيب: رفع 4 ملفات (performance.html · index.html · pv-dark-pages.css ·
+   pv-dark-pages-sync.js) لـ public_html/. api.php ما تبدلش.
 
 🔁 إعادة البناء (للمطوّر)
 
-   python3 scripts/patch-performance-tab.py    # يزيد التبويب فـ index.html
-   python3 scripts/build-dark-pages.py         # يحدّث pv-dark-pages.css
-   python3 scripts/build-dark-mode.py          # يعاود يدخل الدارك فـ index.html
+   python3 scripts/build-dark-pages.py          # pv-dark-pages.css
+   python3 scripts/build-dark-pages.py --check  # واش مضبوط
+   python3 scripts/patch-performance-tab.py --check
 
 ✅ التحقق: sha256sum -c SHA256.txt
