@@ -4,13 +4,34 @@
    ══════════════════════════════════════════════════════════════ */
 
 html[data-pv-theme="dark"]{
+  --amber-soft:hsl(48, 58%, 17%);
   --bg:#0a1120;
+  --blue-soft:hsl(214, 58%, 17%);
   --card:#16233a;
+  --green-soft:hsl(141, 58%, 17%);
   --line:#2b3a56;
   --muted:#93a4bd;
+  --red-soft:hsl(0, 58%, 17%);
+  --soft:hsl(210, 40%, 17%);
   --text:#e8eef7;
+  --violet-soft:hsl(251, 58%, 17%);
 }
 
+html[data-pv-theme="dark"] .btn:hover{border-color:#2b3a56 !important}
+html[data-pv-theme="dark"] .banner .ico{background:#16233a !important}
+html[data-pv-theme="dark"] .rank{color:hsl(23, 82%, 72%) !important}
+html[data-pv-theme="dark"] .rank.r1{background:hsl(48, 58%, 17%) !important;color:hsl(22, 78%, 72%) !important}
+html[data-pv-theme="dark"] .rate .bar{background:hsl(214, 32%, 17%) !important}
+html[data-pv-theme="dark"] .tag.ok{color:hsl(143, 64%, 72%) !important}
+html[data-pv-theme="dark"] .tag.mid{color:hsl(23, 82%, 72%) !important}
+html[data-pv-theme="dark"] .tag.bad{color:hsl(0, 70%, 72%) !important}
+html[data-pv-theme="dark"] .mini{background:hsl(214, 32%, 17%) !important}
+html[data-pv-theme="dark"] .badge.ok{color:hsl(143, 64%, 72%) !important}
+html[data-pv-theme="dark"] .badge.mid{color:hsl(23, 82%, 72%) !important}
+html[data-pv-theme="dark"] .badge.bad{color:hsl(0, 70%, 72%) !important}
+html[data-pv-theme="dark"] .badge.info{color:hsl(226, 71%, 72%) !important}
+html[data-pv-theme="dark"] .fstep .b{background:hsl(214, 32%, 17%) !important}
+html[data-pv-theme="dark"] .err{color:hsl(0, 70%, 72%) !important;border:#2b3a56 !important}
 html[data-pv-theme="dark"] .nav a:hover,html[data-pv-theme="dark"] .nav a.on{background:#16233a !important}
 html[data-pv-theme="dark"] .btn-gold{color:hsl(224, 45%, 72%) !important}
 html[data-pv-theme="dark"] .scan-icon{border:#2b3a56 !important;background:hsl(45, 58%, 17%) !important}
@@ -96,3 +117,8 @@ html[data-pv-theme="dark"] thead{background:hsl(43, 44%, 19%) !important;color:#
 html[data-pv-theme="dark"] thead th,
 html[data-pv-theme="dark"] thead td{color:#efd9a4 !important;border-color:#3a3220 !important}
 html[data-pv-theme="dark"] tbody tr:hover{background:#1b2a44 !important}
+
+/* ── performance.html: الأزرار المختارة كتبان فـ الوضع الليلي ── */
+html[data-pv-theme="dark"] .seg button.on{background:#2563eb !important;color:#fff !important}
+html[data-pv-theme="dark"] .btn.primary{background:#2563eb !important;border-color:#2563eb !important;color:#fff !important}
+html[data-pv-theme="dark"] .banner{background:#101c31 !important}

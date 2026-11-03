@@ -101,6 +101,33 @@ python3 scripts/build-dark-pages.py --check   # واش محدّث
 
 التباين كامل داز WCAG AA (4.59–16.7:1).
 
+## صفحة Performance
+
+تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
+
+```bash
+python3 scripts/patch-performance-tab.py          # كيزيد التبويب (idempotent)
+python3 scripts/patch-performance-tab.py --check  # واش مضاف
+python3 scripts/build-dark-pages.py               # كيدخل الوضع الليلي للصفحة
+```
+
+**الملف:** `public_html/performance.html` (self-contained: HTML + CSS + JS، بلا أي مكتبة خارجية).
+
+**المصدر:** `GET api.php` (header `X-Sync-Token`) → `paraveda_orders_v5` + `paraveda_villes_v2`
+(فrais livraison) + `paraveda_adspend_v1`. الحساب كامل client-side.
+
+**الحسابات (كاملة من الحقول الحقيقية):**
+- مؤكدة = `statut === "Confirmé"` · ملغاة = `"Annulé"` · محاولات = `statut` بحال `Appel-N`
+- مرسلة = livraison ∈ {Livrée, Retour, Remboursé, Expédier vers, Rechange}
+- موصلة = `Livrée` · مرتجعة = `Retour` / `Remboursé`
+- CA = Σ(`prix × qte`) للموصلة · العمولة = Σ(`commission`)
+- تكلفة التوصيل = `paraveda_villes_v2[nom].prix` · المارج = CA − توصيل − عمولات
+- taux livraison = موصلة / مؤكدة · taux retour = مرتجعة / (موصلة + مرتجعة)
+
+**الأقسام:** KPIs عامة · مقارنة 3 فترات · بطاقات البنات (Livrée/Retour/Expédié/Confirmé +
+محاولات + عمولة) · جدول مقارنة · رسوم (نشاط، CA، تأكيدات، مرتجعات — SVG بلا مكتبة) ·
+المنتجات · Produit × Agente · المدن · المصادر + مصاريف الإعلانات · Tunnel · محاولات الاتصال.
+
 ## ملاحظات
 
 - `git` كيتجاهل الداتا والسجلات (`crm_data.json`, `journal.log`, `audit.log`,

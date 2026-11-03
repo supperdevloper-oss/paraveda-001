@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / 'public_html'
 
-PAGES = ['retours.html', 'quick.html', 'digylog-admin.html', 'digylog-chat.html', 'dino.html']
+PAGES = ['performance.html', 'retours.html', 'quick.html', 'digylog-admin.html', 'digylog-chat.html', 'dino.html']
 
 BG = '#0a1120'
 SURF = '#16233a'
@@ -179,6 +179,13 @@ def dark_var(name, value):
     if not hexv:
         return None
     l = lum(hexv)
+    key = name.strip('-').lower()
+    # --soft / --green-soft … خلفيات فاتحة دلالية
+    if key == 'soft' or key.endswith('-soft') or key.endswith('-bg-soft'):
+        hue, sat, _ = _hsl(hexv)
+        if sat < 0.12:
+            return SURF2
+        return recolor(hexv, 0.17, 0.35, 0.58)
     for rx, kind in VAR_KIND:
         if rx.search(name):
             if kind == 'surface':
@@ -263,6 +270,11 @@ html[data-pv-theme="dark"] thead{background:hsl(43, 44%, 19%) !important;color:#
 html[data-pv-theme="dark"] thead th,
 html[data-pv-theme="dark"] thead td{color:#efd9a4 !important;border-color:#3a3220 !important}
 html[data-pv-theme="dark"] tbody tr:hover{background:#1b2a44 !important}
+
+/* ── performance.html: الأزرار المختارة كتبان فـ الوضع الليلي ── */
+html[data-pv-theme="dark"] .seg button.on{background:#2563eb !important;color:#fff !important}
+html[data-pv-theme="dark"] .btn.primary{background:#2563eb !important;border-color:#2563eb !important;color:#fff !important}
+html[data-pv-theme="dark"] .banner{background:#101c31 !important}
 """
 
 BOOT = """<script id="pv-dark-pages-boot">(function(){try{

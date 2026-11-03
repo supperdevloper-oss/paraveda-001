@@ -1,0 +1,115 @@
+════════════════════════════════════════════════════════════════════════
+ PARAVEDA CRM — صفحة «Performance» (نسخة 1)
+════════════════════════════════════════════════════════════════════════
+
+📌 شنو هي؟
+
+صفحة جديدة كاملة سميتها Performance، كتحسب البنات (الكونفيرماتورات) والمنتجات
+والمبيعات من **الطلبيات الحقيقية** ديال الـ CRM — بلا أرقام مزيفة وبلا قيم
+محطوطة باليد. كل رقم كيتحسب من الحقول: statut، livraison، prix × qte،
+commission، ville (ثمن التوصيل)، adspend.
+
+كتحمّل داخل الـ CRM بحال Suivi des Retours (iframe)، وكتبان كتبويب جديد
+«📈 Performance» فـ القائمة ديال فوق.
+
+──────────────────────────────────────────────────────────────────────────
+
+📊 شنو فيها بالضبط
+
+ 1. KPI عامة: عدد الطلبيات، مؤكدة + taux، مرسلة، موصلة + taux، مرتجعة + taux،
+    CA موصل، مارج تقديري — مع مقارنة مع الفترة اللي قبلها (▲▼).
+
+ 2. «Période analysée»: اليوم / 7 أيام / 30 يوم فـ نفس الشاشة.
+
+ 3. بطاقات البنات: كل بنت عندها كارت فيه:
+      • Taux de confirmation + Taux de livraison (بالبار)
+      • مؤكدة / موصلة / مرتجعة / مرسلة
+      • Commandes / Appels / Annulées / Commission
+      • ترتيب حسب الـ CA + «Panier moyen» + تقييم (Bonne/Moyenne/À travailler)
+
+ 4. جدول مقارنة: 13 عمود (تأكيد، توصيل، مرتجع، CA، عمولة، حصة من CA...).
+
+ 5. رسوم بيانية (SVG خالص، بلا أي مكتبة خارجية):
+      • نشاط الطلبيات بالنهار
+      • CA الموصل بالنهار
+      • التأكيدات لكل بنت
+      • المرتجعات لكل بنت
+
+ 6. المنتجات: شنو كيتباع بجدّية — طلبيات/مؤكدة/موصلة/مرتجعة/نسبة المرتجع/CA
+      + Top produits + Taux de retour par produit.
+
+ 7. Produit × Agente: شكون أحسن بنت فـ كل منتج.
+
+ 8. المدن (أعلى 12) + المصادر (Facebook/Leader/Google…) + مصاريف الإعلانات
+    وثمن الطلبية المؤكدة.
+
+ 9. Tunnel: Assisgnées → Confirmées → Expédiées → Livrées (بالنسب).
+
+10. توزيع محاولات الاتصال (Appel-1 … Appel-6) + توزيع كل الـ statuts.
+
+فلاتر: الفترة (اليوم/أمس/7/30/الشهر/الكل + تاريخ مخصص)، بنت، منتج.
++ زر «Actualiser» و«Export CSV» (كيصدر جدول البنات).
+
+──────────────────────────────────────────────────────────────────────────
+
+📦 الملفات فـ هاد المجلد
+
+   performance.html            ← الصفحة (self-contained: HTML+CSS+JS)
+   index.html                  ← التطبيق الرئيسي (فيه التبويب الجديد)
+   pv-dark-pages.css           ← ستايل الوضع الليلي للصفحات (فيها rules ديال Performance)
+   pv-dark-pages-sync.js       ← كيخلي الـ iframe يتبع الاختيار ديال الوضع الليلي
+   apercu-performance-light.jpg ← صورة حقيقية (نهاري)
+   apercu-performance-dark.jpg  ← صورة حقيقية (ليلي)
+   SHA256.txt
+   paraveda-performance.zip
+
+──────────────────────────────────────────────────────────────────────────
+
+🚀 التركيب
+
+   رفع 4 ملفات فـ نفس مسار public_html/:
+
+       performance.html
+       index.html
+       pv-dark-pages.css
+       pv-dark-pages-sync.js
+
+   ⚠️ إلا رفعتي غير performance.html: الصفحة كتخدم (performance.html مباشرة)،
+      ولكن التبويب فـ القائمة ما غاديش يبان حيت كاين فـ index.html.
+
+   ⚠️ api.php ما تبدلش — نفس النسخة 3.94.
+
+   الصفحة كتقرا من `GET api.php` بـ header `X-Sync-Token`، وكتحتاج تكون
+   مسجل الدخول (نفس session ديال الـ CRM).
+
+──────────────────────────────────────────────────────────────────────────
+
+🔢 كيفاش كنحسبو (باش تتحقق)
+
+   مؤكدة        = statut === "Confirmé"
+   ملغاة        = statut === "Annulé"
+   محاولات      = statut بحال "Appel-N" (N = عدد المحاولات)
+   مرسلة        = livraison ∈ {Livrée, Retour, Remboursé, Expédier vers, Rechange}
+   موصلة        = livraison === "Livrée"
+   مرتجعة       = livraison ∈ {Retour, Remboursé}
+   CA           = Σ(prix × qte) للطلبيات الموصلة
+   عمولة        = Σ(commission) للطلبيات الموصلة
+   ثمن التوصيل  = paraveda_villes_v2[ville].prix
+   مارج         = CA − ثمن التوصيل − العمولات
+   taux liv.    = موصلة ÷ مؤكدة
+   taux retour  = مرتجعة ÷ (موصلة + مرتجعة)
+
+   مثال (30 يوم الأخيرة 2026-10-05 → 2026-11-03):
+      1 135 طلبية · 624 مؤكدة (55.0%) · 597 مرسلة · 274 موصلة (43.9%)
+      139 مرتجعة (33.7%) · CA 81 471 MAD · Panier moyen 297 MAD
+      Marge estimée 62 661 MAD
+
+──────────────────────────────────────────────────────────────────────────
+
+🔁 إعادة البناء (للمطوّر)
+
+   python3 scripts/patch-performance-tab.py    # يزيد التبويب فـ index.html
+   python3 scripts/build-dark-pages.py         # يحدّث pv-dark-pages.css
+   python3 scripts/build-dark-mode.py          # يعاود يدخل الدارك فـ index.html
+
+✅ التحقق: sha256sum -c SHA256.txt
