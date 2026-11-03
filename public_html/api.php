@@ -1840,10 +1840,15 @@ function crm_delivery_is_returned($info) { return crm_delivery_status($info)==='
 function crm_delivery_fetch_infos($trackings,$token) {
   $out=array();if(!function_exists('curl_multi_init'))return $out;
   $tokens=is_array($token)?array_values($token):array($token);
+  /* BUGFIX: $token can be an array here (callers pass crm_dl_api_tokens()),
+     which produced the header "Authorization: Bearer Array" → every call 401
+     and the Livrée/Retournée sync silently never worked. Use the first token. */
+  $bearer=(string)(count($tokens)?$tokens[0]:'');
+  if($bearer==='')return $out;
   $mh=curl_multi_init();$chs=array();
   foreach($trackings as $tr){$tr=strtoupper(trim((string)$tr));if($tr==='')continue;
     $ch=curl_init(crm_dl_base().'/order/'.rawurlencode($tr).'/infos');
-    curl_setopt_array($ch,array(CURLOPT_HTTPHEADER=>array('Accept: application/json','Referer: https://apiseller.digylog.com','Authorization: Bearer '.$token),CURLOPT_RETURNTRANSFER=>true,CURLOPT_CONNECTTIMEOUT=>8,CURLOPT_TIMEOUT=>20));
+    curl_setopt_array($ch,array(CURLOPT_HTTPHEADER=>array('Accept: application/json','Referer: https://apiseller.digylog.com','Authorization: Bearer '.$bearer),CURLOPT_RETURNTRANSFER=>true,CURLOPT_CONNECTTIMEOUT=>8,CURLOPT_TIMEOUT=>20));
     curl_multi_add_handle($mh,$ch);$chs[$tr]=$ch;
   }
   $running=null;do{$mrc=curl_multi_exec($mh,$running);if($running)curl_multi_select($mh,1.0);}while($running&&$mrc===CURLM_OK);
