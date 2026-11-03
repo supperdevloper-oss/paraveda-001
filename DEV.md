@@ -53,6 +53,33 @@ PORT=9000 ./scripts/dev-server.sh
 النسخة اللي كترفع كتطابق بايت ببايت `public_html/index.html`
 (SHA256: `4f91ac2d4b00eea2eda126a9cc7d7e3dc5b7584bb18d62709502a2a5e63416a3`).
 
+## الوضع الليلي (Dark Mode) — v1
+
+زر فـ أعلى اليمين حدى «تسجيل الخروج» (36×36، نفس القياس) كيبدل بين نهاري/ليلي.
+
+**الملفات:**
+- `public_html/pv-dark.css` — القواعد (مولّدة) · `public_html/pv-dark.js` — الزر والمنطق
+- داخل `index.html` بين `<!--PV-DARK:BEGIN-->` و`<!--PV-DARK:END-->` (self-contained:
+  ترفع غير index.html وتخدم)
+
+**إعادة البناء بعد أي تعديل:**
+```bash
+python3 scripts/build-dark-css.py    # كيولّد pv-dark.css من ألوان الـ bundle
+python3 scripts/build-dark-mode.py   # كيدخلهم فـ index.html (idempotent)
+python3 scripts/build-dark-mode.py --check   # واش index.html محدّث
+```
+
+**كيفاش كيخدم:**
+- `data-pv-theme` على `<html>` + اختيار محفوظ فـ `localStorage.pv_theme`
+- سكريبت صغير فـ `<head>` (`pv-dark-boot`) كيطبق الوضع **قبل الرسم** = بلا وميض
+- `Alt+D` = تبديل · `window.PVTheme.get/set/toggle/reset()`
+- الزر كيعاود يركّب راسو إلا حيدو re-render ديال React (MutationObserver)
+- الصفحات بلا هيدر (login) → الزر كيولي طاير فـ أقصى اليمين
+
+**التغطية:** 241 utility مغطاة + ألوان inline (جداول COMONDES) + gradients فاتحة.
+الألوان الصلبة والأزرار الملونة كتبقى بحالها (ما كتخسرش معنى الحالة).
+التباين كامل داز WCAG AA (4.59–16.7:1).
+
 ## ملاحظات
 
 - `git` كيتجاهل الداتا والسجلات (`crm_data.json`, `journal.log`, `audit.log`,

@@ -1,0 +1,68 @@
+════════════════════════════════════════════════════════════════════
+  Paraveda CRM — زر الوضع الليلي (Dark Mode)
+  زر احترافي فـ أعلى اليمين، حدى «تسجيل الخروج»
+════════════════════════════════════════════════════════════════════
+
+شنو تزاد
+─────────
+• زر 36×36 فـ الهيدر، نفس قياس وستايل زر الخروج، حداه بالضبط
+  (فوق الموبايل كيولي 32×32 باش الهيدر ما يتزاحمش).
+• كيقلب بين نهاري ↔ ليلي: أيقونة القمر كتدور وكتختفي، والشمس كتدخل.
+• الاختيار كيتسجل فـ localStorage → كيبقى ثابت حتى إلا سديت الموقع.
+• كيتطبق قبل ما ترسم الصفحة = بلا وميض أبيض (no flash).
+• Alt+D = تبديل سريع من الكيبورد.
+• فالـ login (بلا هيدر) الزر كيولي طاير فـ أقصى اليمين ف الأعلى.
+
+شنو كيتغامق
+─────────────
+• 241 utility من Tailwind (خلفيات، نصوص، حدود، rings) + ألوان inline
+  ديال جداول COMONDES/LIVRAISON (اللي كتبنى بـ style مباشرة).
+• الـ gradients الفاتحة (from-blue-50, to-white...) كتولي غامقة.
+• scrollbar، inputs، selects، checkboxes، الـ selection، ألوان المتصفح
+  (color-scheme) و theme-color ديال الموبايل.
+• الألوان الصلبة (أزرار أزرق/أخضر/أحمر، شارات الحالات Livrée/Retour)
+  كتبقى بحالها — ما كتخسرش معنى الحالة.
+
+التباين: كل أزواج النص/الخلفية دازو WCAG AA (من 4.59:1 حتى 16.7:1).
+
+
+كيفاش ترفع (خطوة وحدة)
+──────────────────────
+1. باكاب: حفظ index.html لي دابا فالسيرفر.
+2. رفع index.html لي فهاد المجلد فوق public_html/index.html
+3. Ctrl+F5 (ولا Ctrl+Shift+R) باش يمسح الكاش.
+
+الملف self-contained: فيه CSS و JS ديال الوضع الليلي داخلو،
+فما تحتاجش ترفع pv-dark.css / pv-dark.js. (هذوك غير للسورس/التعديل.)
+
+⚠️ هاد الملف فيه حتى إصلاح بانر النسخة 3.93/3.94 (المشكل رقم 1).
+
+
+إلا بغيتي تبدل شي حاجة
+──────────────────────
+• الزر يولي فـ أقصى اليمين (قبل زر الخروج، ماشي من بعدو):
+  فـ pv-dark.js بدل:
+      logout.parentNode.insertBefore(btn, logout.nextSibling);
+  بـ:
+      logout.parentNode.insertBefore(btn, logout);
+
+• يفتح ليلي من أول زيارة (default):
+  فـ index.html قلّب على pv-dark-boot وبدل  t='light'  بـ  t='dark'.
+
+• يتبع نظام التشغيل من أول زيارة:
+  فـ pv-dark-boot زيد قبل setAttribute:
+      if(!localStorage.getItem('pv_theme'))
+        t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+• تحيد الوضع الليلي نهائياً:
+  حيد البلوك اللي بين  <!--PV-DARK:BEGIN-->  و  <!--PV-DARK:END-->
+  وحيد سكريبت pv-dark-boot من <head>.
+
+• تعاود تبني بعد أي تعديل فـ pv-dark.css / pv-dark.js:
+      python3 scripts/build-dark-css.py
+      python3 scripts/build-dark-mode.py
+
+
+تشيك (اختياري)
+──────────────
+  sha256sum index.html   →  خاصو يكون 91acca713ab90a4dab58e543aea0c394506e40827e99b5075cfcf8e121f8628e
