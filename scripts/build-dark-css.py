@@ -50,25 +50,61 @@ for _fam, _shades in PALETTE.items():
         FAMILY_BY_HEX.setdefault(_hx.lower(), (_fam, _sh.lstrip('_')))
 
 # ── dark tokens ─────────────────────────────────────────────────────────────
-BG      = '#070d18'   # أعمق خلفية (body)
-SURF    = '#101a2c'   # الكروت / bg-white
-SURF2   = '#16223a'
-SURF3   = '#1c2a45'
-BORDER  = '#26354f'
-BORDER2 = '#33456a'
+BG      = '#0a1120'   # أعمق خلفية (body)
+SURF    = '#16233a'   # الكروت / bg-white  (أفتح من الصفحة باش يبان الهرم)
+SURF2   = '#1b2a44'
+SURF3   = '#223350'
+ZEBRA   = '#121d31'   # السطر المايل (zebra)
+BORDER  = '#2b3a56'
+BORDER2 = '#3a4d70'
 TXT     = '#e8eef7'
 TXT2    = '#c6d2e2'
 MUTED   = '#93a4bd'
 MUTED2  = '#7b8da6'
 
-NEUTRAL_BG = {'_50': '#0b1424', '_100': '#0e1830', '_200': '#14203a', '_300': '#1b2946'}
+NEUTRAL_BG = {'_50': ZEBRA, '_100': BG, '_200': '#1b2942', '_300': '#22334f'}
 NEUTRAL_TXT = {'_50': '#f8fafc', '_100': '#eef2f8', '_200': '#e2e9f3', '_300': '#cfdaea',
                '_400': MUTED2, '_500': MUTED, '_600': TXT2, '_700': TXT2, '_800': TXT, '_900': TXT}
 NEUTRAL_BORDER = {'_50': '#1a2436', '_100': '#1f2c44', '_200': BORDER, '_300': BORDER2,
                   '_400': '#40567c', '_500': '#4a5f83', '_600': '#55688a', '_700': '#5f7091',
                   '_800': '#6a7a99', '_900': '#75849f'}
 
-TINT = {'_50': .12, '_100': .18, '_200': .26, '_300': .34}
+# tints غامقة ولكن واضحة — كل عائلة عندها سطح ديالها
+TINT_SOLID = {
+    'green':  ('#0f2f22', '#143a2b', '#1a4634'),
+    'red':    ('#38191d', '#431f24', '#4f262c'),
+    'amber':  ('#35270e', '#403013', '#4c3a18'),
+    'yellow': ('#332c0f', '#3d3513', '#493f18'),
+    'orange': ('#3a2410', '#462c14', '#523318'),
+    'blue':   ('#14263f', '#182f4d', '#1e3a5e'),
+    'cyan':   ('#0e2c33', '#123640', '#17424d'),
+    'violet': ('#231d3f', '#2b244c', '#332a59'),
+    'pink':   ('#351a2b', '#412034', '#4d263e'),
+}
+GROUP_OF = {
+    'green': 'green', 'emerald': 'green', 'lime': 'green', 'teal': 'green',
+    'red': 'red', 'rose': 'red',
+    'amber': 'amber', 'orange': 'orange', 'yellow': 'yellow',
+    'blue': 'blue', 'sky': 'blue', 'indigo': 'violet',
+    'violet': 'violet', 'purple': 'violet', 'fuchsia': 'violet',
+    'cyan': 'cyan', 'pink': 'pink',
+}
+# شريط الحالة (accent) على حافة السطر
+ACCENT = {
+    'green': '#4ade80', 'red': '#f87171', 'amber': '#fbbf24', 'yellow': '#facc15',
+    'orange': '#fb923c', 'blue': '#60a5fa', 'cyan': '#22d3ee',
+    'violet': '#a78bfa', 'pink': '#f472b6',
+}
+
+
+def tint(hue, shade):
+    g = GROUP_OF.get(hue, 'blue')
+    idx = {'50': 0, '100': 0, '200': 1, '300': 2}.get(shade, 0)
+    return TINT_SOLID[g][idx]
+
+
+def accent(hue):
+    return ACCENT.get(GROUP_OF.get(hue, 'blue'), '#60a5fa')
 TXT_LIFT = {'_50': '_50', '_100': '_100', '_200': '_200', '_300': '_300',
             '_400': '_300', '_500': '_400', '_600': '_400', '_700': '_300',
             '_800': '_300', '_900': '_200'}
@@ -96,7 +132,7 @@ def dark_value(prop, hue, shade, alpha):
         if hue in NEUTRAL:
             return NEUTRAL_BG.get(key) if shade in ('50', '100', '200', '300') else None
         if shade in ('50', '100', '200', '300'):
-            return rgba(PALETTE[hue]['_500'], {'_50': .10, '_100': .16, '_200': .24, '_300': .32}[key])
+            return tint(hue, shade)
         return None
     if hue in ('white', 'black', 'transparent', 'current'):
         if prop == 'bg' and hue == 'white':
@@ -124,7 +160,7 @@ def dark_value(prop, hue, shade, alpha):
     # hues ملوّنة
     if prop == 'bg':
         if shade in ('50', '100', '200', '300'):
-            return rgba(PALETTE[hue]['_500'], TINT[key])
+            return tint(hue, shade)                          # سطح غامق ملوّن واضح
         return None                                          # ألوان صلبة كتبقى
     if prop == 'text':
         if shade in ('500', '600', '700', '800', '900'):
@@ -132,9 +168,9 @@ def dark_value(prop, hue, shade, alpha):
         return None
     if prop in ('border', 'ring', 'divide', 'outline'):
         if shade in ('50', '100', '200'):
-            return rgba(PALETTE[hue]['_500'], .32)
-        if shade == '300':
             return rgba(PALETTE[hue]['_500'], .45)
+        if shade == '300':
+            return rgba(PALETTE[hue]['_500'], .60)
         return None
     return None
 
@@ -149,6 +185,37 @@ UTIL_RE = re.compile(
     r'(bg|text|border|ring|divide|outline|fill|stroke|placeholder|from|via|to)'
     r'-(white|black|transparent|current|' + '|'.join(PALETTE) + r')(?:-(\d{2,3}))?(?:/(\d{1,3}))?'
     r'(?![\w-])')
+
+
+def _rgb(hexv):
+    h = hexv.lstrip('#')
+    if len(h) == 3:
+        h = ''.join(c * 2 for c in h)
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def _hsl(hexv):
+    r, g, b = [v / 255 for v in _rgb(hexv)]
+    mx, mn = max(r, g, b), min(r, g, b)
+    l = (mx + mn) / 2
+    if mx == mn:
+        return 0.0, 0.0, l
+    d = mx - mn
+    s_ = d / (2 - mx - mn) if l > 0.5 else d / (mx + mn)
+    if mx == r:
+        h = ((g - b) / d) % 6
+    elif mx == g:
+        h = (b - r) / d + 2
+    else:
+        h = (r - g) / d + 4
+    return h * 60, s_, l
+
+
+def recolor(hexv, light, smin=0.35, smax=0.60):
+    """كيحافظ على الصبغة (hue) وكيبدل الإضاءة + كيحدّ التشبع."""
+    h, s_, _ = _hsl(hexv)
+    s_ = max(smin, min(smax, s_))
+    return 'hsl(%.0f, %.0f%%, %.0f%%)' % (h, s_ * 100, light * 100)
 
 
 def _lum(h):
@@ -173,117 +240,210 @@ def _rgb_str(hex_color, alpha=None):
 
 
 def build_inline_rules(src):
-    """ألوان الـ inline style (React style objects) → attribute selectors.
+    """ألوان الـ inline style → قواعد dark.
 
-    كنحافظو على معنى اللون: chip خضراء كتبقى خضراء (بدرجة غامقة)،
-    والنص الأحمر كيبقى أحمر ولكن أفتح باش يتقرا على الخلفية الغامقة.
+    عندنا جوج عائلات:
+      • ألوان السطور (status): مكتوبة فـ ternaries  ?"#34c759": ... وكتطبق على
+        tr/td. هذوك خاصهم يغامقو **ديما** (واخا يكونو مشبعين)، مع شريط حالة.
+      • ألوان الأسطح الفاتحة (كروت/خلايا): كتبقى فاتحة فـ light → كتولي سطح غامق.
+      • ألوان النصوص الغامقة → كتولي فاتحة باش تتقرا.
     """
-    pairs = re.findall(
-        r"(background|backgroundColor|color|borderColor|borderLeftColor|fill|stroke)"
-        r"\s*:\s*[\'\"](#[0-9a-fA-F]{3,6}|rgba?\([^)]*\))[\'\"]", src)
+    # (أ) الخصائص اللي كتعني background
+    bg_pairs = [(m.group(1), m.group(2)) for m in re.finditer(
+        r"(background|backgroundColor|bg)\s*:\s*[\'\"](#[0-9a-fA-F]{3,6}|rgba?\([^)]*\))[\'\"]", src)]
+    # (ب) سلاسل الألوان ديال الحالة:  ?"#xxxxxx"
+    ternary = re.findall(r'\?"(#[0-9a-fA-F]{3,6})"', src)
+    # (ج) ألوان النص/الحدود
+    fg_pairs = [(m.group(1), m.group(2)) for m in re.finditer(
+        r"(color|borderColor|borderLeftColor|fill|stroke)\s*:\s*[\'\"](#[0-9a-fA-F]{3,6}|rgba?\([^)]*\))[\'\"]", src)]
 
-    seen = {}
-    for prop, val in pairs:
+    def norm(val):
         v = val.strip()
         if v.startswith('#'):
             alpha = 1.0
             if len(v.lstrip('#')) == 8:
                 alpha = int(v[-2:], 16) / 255
-            hexv = v.lower()[:7]
-        else:
-            nums = [float(x) for x in re.findall(r'[\d.]+', v)]
-            if len(nums) < 3:
-                continue
-            hexv = '#%02x%02x%02x' % tuple(int(min(255, n)) for n in nums[:3])
-            alpha = nums[3] if len(nums) > 3 else 1.0
-        css_prop = {'background': 'background', 'backgroundColor': 'background-color',
-                    'color': 'color', 'borderColor': 'border-color',
-                    'borderLeftColor': 'border-left-color',
-                    'fill': 'fill', 'stroke': 'stroke'}[prop]
-        seen[(css_prop, _rgb_str(hexv, alpha))] = (hexv, alpha)
+            return v.lower()[:7], alpha
+        nums = [float(x) for x in re.findall(r'[\d.]+', v)]
+        if len(nums) < 3:
+            return None
+        return '#%02x%02x%02x' % tuple(int(min(255, n)) for n in nums[:3]), (nums[3] if len(nums) > 3 else 1.0)
 
-    def classify(hexv, alpha):
-        """(family, shade) إلا كان اللون من palette، ولا None."""
-        fam = FAMILY_BY_HEX.get(hexv)
-        return fam
-
-    bg_rules, fg_rules = {}, {}
+    light_rules = {}   # ألوان فاتحة (سطح) → أي عنصر
+    row_rules = {}     # ألوان السطور → tr/td
+    stripes = set()
+    fg_rules = {}
 
     def add(bucket, target, sel):
         bucket.setdefault(target, set()).add(sel)
 
-    for (css_prop, rgbv), (hexv, alpha) in seen.items():
+    def handle_bg(hexv, alpha, rgbv, as_row):
         lum = _lum(hexv)
-        fam = classify(hexv, alpha)
-
-        if css_prop in ('background', 'background-color'):
-            target = None
-            if fam:
-                family, shade = fam
-                if family in NEUTRAL and shade in ('50', '100', '200', '300'):
-                    target = NEUTRAL_BG['_' + shade]
-                elif family not in NEUTRAL and shade in ('50', '100', '200', '300'):
-                    target = rgba(PALETTE[family]['_500'], TINT['_' + shade])
-            if target is None:
-                if lum >= 0.90:
-                    target = SURF
-                elif lum >= 0.78:
-                    target = SURF2
-                elif lum >= 0.60:
-                    target = SURF3
-            if target is None:
-                continue
+        fam = FAMILY_BY_HEX.get(hexv)
+        if as_row and lum >= 0.26:
+            target = tint(fam[0], fam[1]) if (fam and fam[0] not in NEUTRAL and fam[1] in ('50', '100', '200', '300')) else recolor(hexv, 0.17)
             for prop in ('background', 'background-color'):
-                add(bg_rules, target, f'[style*="{prop}: {rgbv}"]')
+                for tag in ('tr', 'td'):
+                    add(row_rules, target, '%s[style*="%s: %s"]' % (tag, prop, rgbv))
+            stripes.add((rgbv, recolor(hexv, 0.62, 0.45, 0.80)))
+            return
+        if lum >= 0.45:
+            # ألوان العلامة (Tailwind 400+) كتبقى بحالها فـ الأزرار والبادجات
+            if fam and fam[1] not in ('50', '100', '200', '300'):
+                return
+            if fam and fam[0] in NEUTRAL:
+                target = NEUTRAL_BG['_' + fam[1]]
+            elif fam:
+                target = tint(fam[0], fam[1])
+            elif lum >= 0.93:
+                target = SURF
+            elif lum >= 0.80:
+                target = SURF2
+            else:
+                target = recolor(hexv, 0.17)
+            for prop in ('background', 'background-color'):
+                add(light_rules, target, '[style*="%s: %s"]' % (prop, rgbv))
+            return
 
-        elif css_prop == 'color':
-            if lum >= 0.82:                     # نص أبيض/فاتح: خليه
+    seen_bg = set()
+    for prop, val in bg_pairs:
+        n = norm(val)
+        if not n:
+            continue
+        hexv, alpha = n
+        rgbv = _rgb_str(hexv, alpha)
+        if rgbv in seen_bg:
+            continue
+        seen_bg.add(rgbv)
+        handle_bg(hexv, alpha, rgbv, False)
+
+    seen_row = set()
+    for hexv in ternary:
+        hexv = hexv.lower()
+        if hexv in seen_row:
+            continue
+        seen_row.add(hexv)
+        rgbv = _rgb_str(hexv, 1.0)
+        if rgbv in seen_bg:
+            continue
+        handle_bg(hexv, 1.0, rgbv, True)
+
+    for prop, val in fg_pairs:
+        n = norm(val)
+        if not n:
+            continue
+        hexv, alpha = n
+        rgbv = _rgb_str(hexv, alpha)
+        lum = _lum(hexv)
+        fam = FAMILY_BY_HEX.get(hexv)
+        if prop in ('color',):
+            if lum >= 0.82:
                 continue
-            target = None
             if fam and fam[0] not in NEUTRAL and fam[1] in ('400', '500', '600', '700', '800', '900'):
                 target = PALETTE[fam[0]][TXT_LIFT['_' + fam[1]]]
-            if target is None and fam and fam[0] in NEUTRAL:
+            elif fam and fam[0] in NEUTRAL:
                 target = NEUTRAL_TXT.get('_' + fam[1])
-            if target is None:
-                if lum <= 0.10:
-                    target = TXT
-                elif lum <= 0.22:
-                    target = TXT2
-                elif lum <= 0.36:
-                    target = MUTED
-                else:
-                    continue
-            add(fg_rules, target, f'[style*="color: {rgbv}"]')
-
-        else:                                   # border-color / fill / stroke
+            elif lum <= 0.10:
+                target = TXT
+            elif lum <= 0.22:
+                target = TXT2
+            elif lum <= 0.36:
+                target = MUTED
+            else:
+                target = recolor(hexv, 0.72, 0.40, 0.80)
+            add(fg_rules, target, '[style*="color: %s"]' % rgbv)
+        else:
             if lum < 0.72:
                 continue
-            target = None
-            if fam:
-                family, shade = fam
-                if family in NEUTRAL:
-                    target = NEUTRAL_BORDER.get('_' + shade)
-                else:
-                    target = rgba(PALETTE[family]['_500'], .32)
-            if target is None:
+            if fam and fam[0] in NEUTRAL:
+                target = NEUTRAL_BORDER.get('_' + fam[1], BORDER)
+            elif fam:
+                target = rgba(PALETTE[fam[0]]['_500'], .42)
+            else:
                 target = BORDER
-            add(fg_rules, target, f'[style*="-color: {rgbv}"]')
+            add(fg_rules, target, '[style*="-color: %s"]' % rgbv)
 
     out = ['\n/* ── ألوان inline (جداول/كروت كتبني بـ style مباشرة) ── */']
-    for target, sels in sorted(bg_rules.items()):
+    for target, sels in sorted(row_rules.items()):
+        out.append('html[data-pv-theme="dark"] :is(%s){background-color:%s !important}'
+                   % (','.join(sorted(sels)), target))
+    for target, sels in sorted(light_rules.items()):
         out.append('html[data-pv-theme="dark"] :is(%s){background-color:%s !important}'
                    % (','.join(sorted(sels)), target))
     for target, sels in sorted(fg_rules.items()):
         border = [x for x in sorted(sels) if '-color:' in x]
         plain = [x for x in sorted(sels) if '-color:' not in x]
         if plain:
-            prop = 'fill' if any('fill' in x for x in plain) else 'color'
-            out.append('html[data-pv-theme="dark"] :is(%s){%s:%s !important}'
-                       % (','.join(plain), prop, target))
+            out.append('html[data-pv-theme="dark"] :is(%s){color:%s !important}'
+                       % (','.join(plain), target))
         if border:
             out.append('html[data-pv-theme="dark"] :is(%s){border-color:%s !important}'
                        % (','.join(border), target))
+
+    if stripes:
+        out.append('\n/* ── شريط الحالة على حافة السطر (RTL: اليمين) ── */')
+        for rgbv, acc in sorted(stripes):
+            for prop in ('background', 'background-color'):
+                out.append(
+                    'html[data-pv-theme="dark"] tr[style*="%s: %s"]>td:first-child'
+                    '{box-shadow:inset 3px 0 0 %s !important}'
+                    % (prop, rgbv, acc))
     return '\n'.join(out) + '\n'
+
+
+def build_arbitrary_rules(src):
+    """كلاسات Tailwind بـ قيمة حرة (bg-[#f1c232] ...) — ألوان الهيدر ديال الجدول."""
+    out = ['\n/* ── كلاسات بقيمة حرة bg-[#...] / text-[#...] ── */']
+    seen = set()
+    for m in re.finditer(r'\.(bg|text|border)-\\\[\\#([0-9a-fA-F]{3,6})\\\]', src):
+        prop, raw = m.group(1), m.group(2)
+        key = (prop, raw.lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        hexv = '#' + raw
+        lum = _lum(hexv)
+        cls = '.%s-\\[\\#%s\\]' % (prop, raw)
+        if prop == 'bg':
+            if lum <= 0.12:
+                continue
+            val = recolor(hexv, 0.30, 0.40, 0.62)
+            out.append('html[data-pv-theme="dark"] %s{background-color:%s !important}' % (cls, val))
+        elif prop == 'text':
+            if lum >= 0.45:
+                continue
+            val = recolor(hexv, 0.74, 0.40, 0.80)
+            out.append('html[data-pv-theme="dark"] %s{color:%s !important}' % (cls, val))
+        else:
+            if lum < 0.6:
+                continue
+            out.append('html[data-pv-theme="dark"] %s{border-color:rgba(148,163,184,.45) !important}' % cls)
+    return '\n'.join(out) + '\n' if len(out) > 1 else ''
+
+
+def build_kpi_rules(src):
+    """كروت KPI كتستعمل CSS vars inline (--pvk-bg/--pvk-bd) → كنغامقوهم."""
+    pairs = re.findall(r'"--pvk-bg":"(#[0-9a-fA-F]{6})","--pvk-bd":"(#[0-9a-fA-F]{6})"', src)
+    out = ['\n/* ── كروت KPI (متغيرات --pvk inline) ── */']
+    seen = set()
+    for bg_light, bd_light in pairs:
+        if bg_light in seen:
+            continue
+        seen.add(bg_light)
+        fam = FAMILY_BY_HEX.get(bg_light.lower())
+        if not fam:
+            continue
+        family, shade = fam
+        if family in NEUTRAL:
+            new_bg, new_bd = SURF2, BORDER
+        else:
+            new_bg = tint(family, '100')
+            acc = accent(family)
+            new_bd = rgba(acc, .38)
+        out.append(
+            'html[data-pv-theme="dark"] [style*="--pvk-bg: %s"]'
+            '{--pvk-bg:%s !important;--pvk-bd:%s !important}' % (bg_light, new_bg, new_bd))
+    return '\n'.join(out) + '\n' if len(out) > 1 else ''
 
 
 def esc(cls):
@@ -345,8 +505,12 @@ def main():
         block = '\n'.join(by_mq[mq])
         gen.append(f'{mq}{{\n{block}\n}}' if mq else block)
 
-    inline_css = build_inline_rules(src)
-    core = CORE_TEMPLATE
+    inline_css = build_inline_rules(src) + build_kpi_rules(src) + build_arbitrary_rules(src)
+    core = (CORE_TEMPLATE
+            .replace('__BG__', BG).replace('__SURF2__', SURF2).replace('__SURF3__', SURF3)
+            .replace('__SURF__', SURF).replace('__ZEBRA__', ZEBRA)
+            .replace('__BORDER2__', BORDER2).replace('__BORDER__', BORDER)
+            .replace('__INPUT__', '#101c31'))
     header = f"""/* ═══════════════════════════════════════════════════════════════════
    Paraveda CRM — Dark Mode (مود ليلي)
    مولّد أوتوماتيكياً بـ scripts/build-dark-css.py — ما تعدلوش بيدك.
@@ -367,13 +531,52 @@ CORE_TEMPLATE = r"""
 /* ── tokens ────────────────────────────────────────────────────────────── */
 html[data-pv-theme="dark"]{
   color-scheme: dark;
-  --pv-bg:#070d18; --pv-surface:#101a2c; --pv-surface-2:#16223a; --pv-surface-3:#1c2a45;
-  --pv-border:#26354f; --pv-border-strong:#33456a;
+  --pv-bg:__BG__; --pv-surface:__SURF__; --pv-surface-2:__SURF2__; --pv-surface-3:__SURF3__;
+  --pv-border:__BORDER__; --pv-border-strong:__BORDER2__;
   --pv-text:#e8eef7; --pv-text-2:#c6d2e2; --pv-muted:#93a4bd;
   --pv-shadow:0 10px 30px rgba(0,0,0,.55);
-  background:#070d18;
+  background:__BG__;
 }
-html[data-pv-theme="dark"] body{background:#070d18;color:var(--pv-text)}
+html[data-pv-theme="dark"] body{background:__BG__;color:var(--pv-text)}
+
+/* الجدول كيتعاود يـrender frequently → transition كيبدا من جديد وما كيوصلش
+   للون الغامق. كنطفيوه فـ الجداول (ماشي ضروري أصلاً). */
+html[data-pv-theme="dark"] table,
+html[data-pv-theme="dark"] thead,
+html[data-pv-theme="dark"] tbody,
+html[data-pv-theme="dark"] tr,
+html[data-pv-theme="dark"] td,
+html[data-pv-theme="dark"] th{transition:none !important}
+
+/* كروت KPI */
+/* داخل الجدول: الخلايا عندها input كيغطيها → كنخليوه شفاف باش لون
+   الحالة (Livrée/Retour/Expédié...) يبان بحال فـ light mode. */
+html[data-pv-theme="dark"] td input,
+html[data-pv-theme="dark"] td select,
+html[data-pv-theme="dark"] td textarea{background-color:transparent !important;box-shadow:none !important}
+html[data-pv-theme="dark"] td input:focus,
+html[data-pv-theme="dark"] td select:focus,
+html[data-pv-theme="dark"] td textarea:focus{background-color:rgba(255,255,255,.06) !important}
+
+html[data-pv-theme="dark"] .pvk-val{color:var(--pv-text) !important}
+html[data-pv-theme="dark"] .pvk-lab{color:var(--pvk) !important;filter:brightness(1.55) saturate(1.15)}
+html[data-pv-theme="dark"] .pvk-ico{box-shadow:0 6px 16px -6px var(--pvk-rg),0 0 0 1px rgba(255,255,255,.06)}
+
+html[data-pv-theme="dark"] ::placeholder{color:#8497b3 !important;opacity:1}
+
+/* أيقونة التقويم فـ input[type=date] كتكون غامقة على خلفية غامقة */
+html[data-pv-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+html[data-pv-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
+html[data-pv-theme="dark"] input[type="datetime-local"]::-webkit-calendar-picker-indicator{
+  filter:invert(0.85) brightness(1.6);opacity:.75;cursor:pointer}
+html[data-pv-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator:hover{opacity:1}
+html[data-pv-theme="dark"] .pvk-desc,
+html[data-pv-theme="dark"] .pvk-scope,
+html[data-pv-theme="dark"] .pvk-arw{color:var(--pv-muted) !important}
+html[data-pv-theme="dark"] .pvk-bar{background:var(--pv-surface) !important;border-bottom-color:var(--pv-border) !important}
+html[data-pv-theme="dark"] .pvk-chip{background:rgba(99,102,241,.16) !important;color:#c7d2fe !important}
+html[data-pv-theme="dark"] .pvk-badge.up{background:rgba(16,185,129,.18) !important;color:#6ee7b7 !important}
+html[data-pv-theme="dark"] .pvk-badge.dn{background:rgba(239,68,68,.18) !important;color:#fca5a5 !important}
 
 /* منع الوميض الأبيض ملي كتبدل الوضع */
 html.pv-theme-anim,html.pv-theme-anim body,html.pv-theme-anim #root,
@@ -384,31 +587,31 @@ html.pv-theme-anim input,html.pv-theme-anim select{
 
 /* ── الجداول (COMONDES / LIVRAISON...) : ألوان inline ─────────────────── */
 html[data-pv-theme="dark"] [style*="background: rgb(248, 249, 250)"],
-html[data-pv-theme="dark"] [style*="background-color: rgb(248, 249, 250)"]{background-color:#0c1526 !important}
+html[data-pv-theme="dark"] [style*="background-color: rgb(248, 249, 250)"]{background-color:__ZEBRA__ !important}
 html[data-pv-theme="dark"] [style*="background: rgb(15, 23, 42)"],
-html[data-pv-theme="dark"] [style*="background-color: rgb(15, 23, 42)"]{background-color:#0b1424 !important}
+html[data-pv-theme="dark"] [style*="background-color: rgb(15, 23, 42)"]{background-color:__BG__ !important}
 
 /* ── عناصر الفورم ─────────────────────────────────────────────────────── */
 html[data-pv-theme="dark"] input,
 html[data-pv-theme="dark"] select,
 html[data-pv-theme="dark"] textarea{
-  background-color:#0c1526 !important;color:var(--pv-text) !important;
+  background-color:__INPUT__ !important;color:var(--pv-text) !important;
   border-color:var(--pv-border) !important;caret-color:#818cf8;
 }
 html[data-pv-theme="dark"] input::placeholder,
 html[data-pv-theme="dark"] textarea::placeholder{color:#6b7c96 !important}
-html[data-pv-theme="dark"] select option{background:#0c1526;color:var(--pv-text)}
+html[data-pv-theme="dark"] select option{background:__INPUT__;color:var(--pv-text)}
 html[data-pv-theme="dark"] input[type="checkbox"],
 html[data-pv-theme="dark"] input[type="radio"]{accent-color:#6366f1}
 html[data-pv-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.8)}
 html[data-pv-theme="dark"] table{background-color:transparent}
-html[data-pv-theme="dark"] th{background-color:#101a2c !important;color:var(--pv-text-2) !important}
+html[data-pv-theme="dark"] th{background-color:__SURF__ !important;color:var(--pv-text-2) !important}
 html[data-pv-theme="dark"] img,html[data-pv-theme="dark"] video{filter:brightness(.92)}
 
 /* ── scrollbar ─────────────────────────────────────────────────────────── */
 html[data-pv-theme="dark"] ::-webkit-scrollbar{width:11px;height:11px}
-html[data-pv-theme="dark"] ::-webkit-scrollbar-track{background:#0a1220}
-html[data-pv-theme="dark"] ::-webkit-scrollbar-thumb{background:#2a3a58;border-radius:8px;border:2px solid #0a1220}
+html[data-pv-theme="dark"] ::-webkit-scrollbar-track{background:__BG__}
+html[data-pv-theme="dark"] ::-webkit-scrollbar-thumb{background:#2f4062;border-radius:8px;border:2px solid __BG__}
 html[data-pv-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:#37496b}
 html[data-pv-theme="dark"] ::selection{background:rgba(99,102,241,.4);color:#fff}
 

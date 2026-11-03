@@ -29,6 +29,14 @@
     .login a { display: inline-block; margin-top: 12px; background: #0f766e; color: #fff; padding: 12px 18px; border-radius: 12px; text-decoration: none; font-weight: 700; }
     .hint { font-size: 13px; color: #64748b; margin-top: 10px; text-align: center; }
   </style>
+<!--PV-DARK-PAGES:BEGIN-->
+<link rel="stylesheet" href="pv-dark-pages.css" id="pv-dark-pages-css">
+<script id="pv-dark-pages-boot">(function(){try{
+var t=localStorage.getItem('pv_theme');
+var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+if(t==='dark'){document.documentElement.setAttribute('data-pv-theme','dark');}
+}catch(e){}})();</script>
+<!--PV-DARK-PAGES:END-->
 </head>
 <body>
   <div class="top">
@@ -153,5 +161,6 @@
     });
   })();
   </script>
+<script src="pv-dark-pages-sync.js" id="pv-dark-pages-js"></script>
 </body>
 </html>

@@ -9,6 +9,14 @@
 @media(max-width:760px){.top{padding:10px 12px}.logo{width:38px;height:38px}.heading p,.pill{display:none}.main{display:block;position:relative}.side,.chat{position:absolute;inset:0}.chat{display:none}.app.chat-open .side{display:none}.app.chat-open .chat{display:grid}.back{display:block}.messages{padding:12px}.msg{max-width:88%}.composer{padding:9px}.send{padding:0 13px}.conv-list{padding-bottom:70px}}
 body.compact{background:#fff}body.compact .app{display:block;height:100dvh}body.compact .top,body.compact .side{display:none!important}body.compact .main{display:block;height:100%;background:#fff}body.compact .chat{position:relative!important;inset:auto!important;display:grid!important;width:100%;height:100%;grid-template-rows:auto 1fr auto}body.compact .back{display:none!important}body.compact .chat-head{padding:10px 13px;background:linear-gradient(135deg,#f8fafc,#eef2ff)}body.compact .messages{padding:12px}body.compact .msg{max-width:85%}body.compact .composer{padding:9px}body.compact .empty,body.compact .loading,body.compact .error{min-height:220px}
 </style>
+<!--PV-DARK-PAGES:BEGIN-->
+<link rel="stylesheet" href="pv-dark-pages.css" id="pv-dark-pages-css">
+<script id="pv-dark-pages-boot">(function(){try{
+var t=localStorage.getItem('pv_theme');
+var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+if(t==='dark'){document.documentElement.setAttribute('data-pv-theme','dark');}
+}catch(e){}})();</script>
+<!--PV-DARK-PAGES:END-->
 </head>
 <body>
 <div class="app" id="app">
@@ -84,5 +92,6 @@ document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.que
 if(!viewerId()){if(FOCUS_TRACKING)focusedError('chat-session-required');else $('list').innerHTML='<div class="error"><div><strong>Session CRM introuvable</strong><span>Reconnectez-vous au CRM.</span></div></div>'}else{load();setInterval(()=>{if(!document.hidden)load(true)},5000)}
 })();
 </script>
+<script src="pv-dark-pages-sync.js" id="pv-dark-pages-js"></script>
 </body>
 </html>

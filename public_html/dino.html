@@ -33,6 +33,14 @@ canvas{display:block;width:100%;border-radius:18px;background:#fff;box-shadow:0 
      font-size:15px;border-radius:12px;padding:12px 30px;cursor:pointer;box-shadow:0 10px 25px rgba(99,102,241,.4)}
 #over button:hover{transform:translateY(-1px)}
 </style>
+<!--PV-DARK-PAGES:BEGIN-->
+<link rel="stylesheet" href="pv-dark-pages.css" id="pv-dark-pages-css">
+<script id="pv-dark-pages-boot">(function(){try{
+var t=localStorage.getItem('pv_theme');
+var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+if(t==='dark'){document.documentElement.setAttribute('data-pv-theme','dark');}
+}catch(e){}})();</script>
+<!--PV-DARK-PAGES:END-->
 </head>
 <body>
 <div class="top">
@@ -259,5 +267,6 @@ document.addEventListener('visibilitychange',function(){ if(document.hidden&&sta
 window.addEventListener('resize',function(){ lastT=0; });
 })();
 </script>
+<script src="pv-dark-pages-sync.js" id="pv-dark-pages-js"></script>
 </body>
 </html>

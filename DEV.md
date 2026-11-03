@@ -53,7 +53,7 @@ PORT=9000 ./scripts/dev-server.sh
 النسخة اللي كترفع كتطابق بايت ببايت `public_html/index.html`
 (SHA256: `4f91ac2d4b00eea2eda126a9cc7d7e3dc5b7584bb18d62709502a2a5e63416a3`).
 
-## الوضع الليلي (Dark Mode) — v1
+## الوضع الليلي (Dark Mode) — v2
 
 زر فـ أعلى اليمين حدى «تسجيل الخروج» (36×36، نفس القياس) كيبدل بين نهاري/ليلي.
 
@@ -76,8 +76,29 @@ python3 scripts/build-dark-mode.py --check   # واش index.html محدّث
 - الزر كيعاود يركّب راسو إلا حيدو re-render ديال React (MutationObserver)
 - الصفحات بلا هيدر (login) → الزر كيولي طاير فـ أقصى اليمين
 
-**التغطية:** 241 utility مغطاة + ألوان inline (جداول COMONDES) + gradients فاتحة.
+**التغطية:** 241 utility مغطاة + ألوان inline (جداول COMONDES) + كلاسات
+بقيمة حرة (`bg-[#f1c232]`) + متغيرات كروت KPI (`--pvk-bg`) + gradients فاتحة.
 الألوان الصلبة والأزرار الملونة كتبقى بحالها (ما كتخسرش معنى الحالة).
+
+**قواعد v2 (مهمة):**
+- ألوان الحالة فـ الجداول (`#34c759` Livrée، `#ff2b2b` Retour، `#f6b26b` Expédié،
+  `#ffff00` Rappel…) كتولي **tint صلب غامق** بنفس الصبغة + شريط 3px على حافة السطر
+  (`box-shadow: inset 3px 0 0 accent`) — ماشي شفافية فوق خلفية كحلة.
+- ألوان ماشي من باليت Tailwind كتتحول بـ HSL (`recolor()`): نفس hue، L≈17%.
+- `transition:none` على `table/tr/td/th` فـ الوضع الليلي: الجدول كيـre-render
+  كل ثانية وtransition كان كيعاود يبدا من الأول → اللون الغامق ما كانش كيبان.
+- inputs داخل `td` كتولي شفافة باش لون الحالة يبان (بحال light mode).
+
+**الصفحات المستقلة** (retours.html, quick.html, digylog-*) — كتتحمل داخل iframe
+وكتبنى بـ CSS خاص بها. `scripts/build-dark-pages.py` كيحلل CSS ديالها وكيولّد
+`pv-dark-pages.css` (نفس تحويل HSL) وكيدز boot + sync فـ كل صفحة بين
+`<!--PV-DARK-PAGES:BEGIN-->` و`<!--PV-DARK-PAGES:END-->`.
+```bash
+python3 scripts/build-dark-pages.py           # يولد + يدخل
+python3 scripts/build-dark-pages.py --check   # واش محدّث
+```
+الـ iframe كيتبع اختيار التطبيق عبر `localStorage.pv_theme` + حدث `storage`.
+
 التباين كامل داز WCAG AA (4.59–16.7:1).
 
 ## ملاحظات

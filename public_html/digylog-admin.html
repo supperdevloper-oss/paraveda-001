@@ -28,6 +28,14 @@
     .msg.err { display: block; background: #fee2e2; color: #991b1b; }
     .denied { text-align: center; padding: 30px; font-weight: 700; }
   </style>
+<!--PV-DARK-PAGES:BEGIN-->
+<link rel="stylesheet" href="pv-dark-pages.css" id="pv-dark-pages-css">
+<script id="pv-dark-pages-boot">(function(){try{
+var t=localStorage.getItem('pv_theme');
+var os=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+if(t==='dark'){document.documentElement.setAttribute('data-pv-theme','dark');}
+}catch(e){}})();</script>
+<!--PV-DARK-PAGES:END-->
 </head>
 <body>
   <div class="top">
@@ -383,5 +391,6 @@
     };
   })();
   </script>
+<script src="pv-dark-pages-sync.js" id="pv-dark-pages-js"></script>
 </body>
 </html>
