@@ -1138,21 +1138,21 @@ tr[data-ann="1"] input,tr[data-ann="1"] select,tr[data-ann="1"] textarea{text-de
 
 
 /*PV-RIDE:BEGIN*/
-/* ===== شريط الحالة — Control Tower (SVG + CSS، أرقام حقيقية) ===== */
-.pv-ride{position:relative;flex:1 1 420px;min-width:330px;height:50px;overflow:hidden;
- align-self:center;pointer-events:none;border-radius:12px;isolation:isolate;
+/* ===== شريط الحالة — Control Tower (SVG + CSS، أرقام + نسب حقيقية) ===== */
+.pv-ride{position:relative;flex:1 1 430px;min-width:340px;height:54px;overflow:hidden;
+ align-self:center;pointer-events:none;border-radius:13px;isolation:isolate;
  background:
-  radial-gradient(120% 180% at 0% 0%,rgba(99,102,241,.42),transparent 58%),
-  radial-gradient(120% 180% at 100% 130%,rgba(13,148,136,.30),transparent 56%),
-  linear-gradient(102deg,#070d19 0%,#0d1a2f 48%,#070d19 100%);
- box-shadow:inset 0 0 0 1px rgba(148,163,184,.24),inset 0 1px 0 rgba(255,255,255,.10),
-  inset 0 -1px 0 rgba(2,6,23,.55),0 10px 24px -20px #020617;
- -webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
- mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent)}
+  radial-gradient(80% 240% at 0% -10%,rgba(99,102,241,.52),transparent 62%),
+  radial-gradient(80% 240% at 100% 140%,rgba(20,184,166,.34),transparent 58%),
+  linear-gradient(102deg,#050a14 0%,#0c1830 46%,#050a14 100%);
+ box-shadow:inset 0 0 0 1px rgba(148,163,184,.22),inset 0 1px 0 rgba(255,255,255,.14),
+  inset 0 -1px 0 rgba(2,6,23,.6),0 14px 30px -24px #020617;
+ -webkit-mask-image:linear-gradient(to right,transparent,#000 2%,#000 98%,transparent);
+ mask-image:linear-gradient(to right,transparent,#000 2%,#000 98%,transparent)}
 /* شبكة نقطية */
 .pv-ride::before{content:"";position:absolute;inset:-14px;z-index:0;
  background-image:radial-gradient(rgba(148,163,184,.30) 1px,transparent 1px);
- background-size:13px 13px;opacity:.42;
+ background-size:13px 13px;opacity:.40;
  -webkit-mask-image:radial-gradient(closest-side,#000,transparent);
  mask-image:radial-gradient(closest-side,#000,transparent)}
 /* شعاع ضوئي كيدوز */
@@ -1161,42 +1161,75 @@ tr[data-ann="1"] input,tr[data-ann="1"] select,tr[data-ann="1"] textarea{text-de
  transform:translateX(-140%);animation:pvSweep 7s cubic-bezier(.45,0,.55,1) infinite}
 @keyframes pvSweep{0%{transform:translateX(-140%)}60%,100%{transform:translateX(370%)}}
 
-/* المسار (اتصال → تأكيد → إرسال → توصيل)، من اليمين لليسار */
+/* المسار (المجموع → اتصال → تأكيد → إرسال → توصيل)، من اليمين لليسار */
 .pv-flow{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:space-between;
  padding:0 26px;direction:rtl}
-.pv-node{display:flex;flex-direction:row;align-items:center;gap:7px;flex:0 0 auto}
-.pv-node i{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;color:#e2e9ff;
- flex:0 0 auto;
- background:linear-gradient(160deg,rgba(99,102,241,.45),rgba(8,15,29,.80));
- box-shadow:inset 0 0 0 1px rgba(129,140,248,.50),0 0 14px -7px rgba(99,102,241,.95);
- animation:pvPulse 5s ease-in-out infinite}
+/* خيط ضوئي فوق */
+.pv-hair{position:absolute;left:26px;right:26px;top:0;height:1px;pointer-events:none;
+ background:linear-gradient(90deg,transparent,rgba(165,180,252,.55) 22%,rgba(45,212,191,.45) 62%,transparent)}
+/* المجموع */
+.pv-tot{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.pv-dot{width:6px;height:6px;border-radius:50%;background:#34d399;flex:0 0 auto;
+ box-shadow:0 0 0 3px rgba(52,211,153,.16),0 0 12px rgba(52,211,153,.9);
+ animation:pvLive 2.6s ease-in-out infinite}
+@keyframes pvLive{0%,100%{box-shadow:0 0 0 3px rgba(52,211,153,.16),0 0 12px rgba(52,211,153,.9)}
+ 50%{box-shadow:0 0 0 6px rgba(52,211,153,.06),0 0 4px rgba(52,211,153,.55)}}
+.pv-tmeta{display:flex;flex-direction:column;line-height:1.05}
+.pv-tmeta b{font-size:14px;font-weight:800;color:#f2f6ff;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.pv-tmeta em{font-size:8.5px;font-style:normal;font-weight:700;color:#8fa3bf;margin-top:3px;letter-spacing:.01em}
+.pv-div{width:1px;height:26px;flex:0 0 auto;margin:0 15px;
+ background:linear-gradient(180deg,transparent,rgba(148,163,184,.45),transparent)}
+
+/* المحطات */
+.pv-node{display:flex;flex-direction:row;align-items:center;gap:8px;flex:0 0 auto}
+.pv-node i{position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:9px;
+ flex:0 0 auto;color:#e9eeff;--pv-ac:#818cf8;
+ background:linear-gradient(160deg,rgba(99,102,241,.42),rgba(6,12,25,.92));
+ box-shadow:inset 0 0 0 1px rgba(129,140,248,.40),0 6px 14px -10px #000;
+ animation:pvPulse 5.2s ease-in-out infinite}
+/* حلقة النسبة (conic) */
+.pv-node i::after{content:"";position:absolute;inset:-3.5px;border-radius:13px;padding:1.5px;
+ background:conic-gradient(from 210deg,var(--pv-ac) var(--p,0%),rgba(148,163,184,.20) 0);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ mask-composite:exclude}
 .pv-node i svg{width:13px;height:13px;display:block}
-.pv-meta{display:flex;flex-direction:column;line-height:1.05}
-.pv-val{font-size:13.5px;font-weight:800;color:#eef3ff;font-variant-numeric:tabular-nums;
- letter-spacing:-.01em;white-space:nowrap}
-.pv-lab{font-size:9px;font-weight:700;color:#9db0ca;margin-top:2px;white-space:nowrap}
-.pv-node.zero .pv-val{color:#8394ad}
-.pv-node.n2 i{animation-delay:.55s}
-.pv-node.n3 i{animation-delay:1.1s}
-.pv-node.n4 i{animation-delay:1.65s}
-.pv-node.n4 i{background:linear-gradient(160deg,rgba(16,185,129,.45),rgba(8,15,29,.80));
- box-shadow:inset 0 0 0 1px rgba(52,211,153,.48),0 0 14px -7px rgba(16,185,129,.95)}
+.pv-meta{display:flex;flex-direction:column;line-height:1}
+.pv-val{font-size:16px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+ white-space:nowrap;background:linear-gradient(180deg,#ffffff,#c9d5f8);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pv-lab{font-size:9px;font-weight:700;color:#9db0ca;margin-top:3px;white-space:nowrap;letter-spacing:.01em}
+.pv-num{display:flex;align-items:baseline;gap:5px}
+.pv-pct{font-size:8px;font-weight:700;letter-spacing:0;color:#8ea2bd;-webkit-text-fill-color:#8ea2bd;
+ background:none;transform:translateY(-1px)}
+.pv-node.zero .pv-pct{color:#6f809a;-webkit-text-fill-color:#6f809a}
+.pv-node.zero .pv-val{background:none;-webkit-text-fill-color:#7c8da6;color:#7c8da6}
+.pv-node.zero i::after{background:conic-gradient(rgba(148,163,184,.20) 0 100%)}
+.pv-node.n2{--pv-ac:#a78bfa}
+.pv-node.n2 i{animation-delay:.5s}
+.pv-node.n3{--pv-ac:#38bdf8}
+.pv-node.n3 i{animation-delay:1s;background:linear-gradient(160deg,rgba(56,189,248,.34),rgba(6,12,25,.92))}
+.pv-node.n4{--pv-ac:#34d399}
+.pv-node.n4 i{animation-delay:1.5s;background:linear-gradient(160deg,rgba(16,185,129,.40),rgba(6,12,25,.92))}
 @keyframes pvPulse{
- 0%,74%,100%{box-shadow:inset 0 0 0 1px rgba(129,140,248,.45),0 0 14px -7px rgba(99,102,241,.85)}
- 12%{box-shadow:inset 0 0 0 1px rgba(199,210,254,.95),0 0 22px -3px rgba(129,140,248,1)}}
+ 0%,76%,100%{box-shadow:inset 0 0 0 1px rgba(129,140,248,.34),0 6px 14px -10px #000}
+ 12%{box-shadow:inset 0 0 0 1px rgba(199,210,254,.85),0 0 18px -4px rgba(129,140,248,.9)}}
 
 /* المسار المتقطّع اللي كيتحرك */
-.pv-seg{flex:1 1 auto;min-width:24px;height:2px;border-radius:2px;margin:0 14px;
- background-image:repeating-linear-gradient(90deg,rgba(139,150,255,.85) 0 5px,rgba(99,102,241,.14) 5px 12px);
+.pv-seg{flex:1 1 auto;min-width:20px;height:2px;border-radius:2px;margin:0 13px;
+ background-image:repeating-linear-gradient(90deg,rgba(139,150,255,.80) 0 5px,rgba(99,102,241,.12) 5px 12px);
  background-size:12px 100%;background-repeat:repeat-x;
  animation:pvTrack 1.15s linear infinite;animation-direction:reverse;
  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
 @keyframes pvTrack{from{background-position-x:0}to{background-position-x:12px}}
 
+@media (max-width:1240px){.pv-tot,.pv-div{display:none}}
+@media (max-width:1320px){.pv-pct{display:none}}
 @media (prefers-reduced-motion:reduce){
  .pv-ride::after{display:none}
- .pv-node i,.pv-seg{animation:none}}
+ .pv-node i,.pv-seg,.pv-dot{animation:none}}
 @media (max-width:1000px){.pv-ride{display:none}}
 /*PV-RIDE:END*/
 
@@ -1536,7 +1569,7 @@ html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
 <script id="pv-dark-boot">(function(){try{var t=localStorage.getItem('pv_theme');if(t!=='dark'&&t!=='light')t='light';document.documentElement.setAttribute('data-pv-theme',t);}catch(e){document.documentElement.setAttribute('data-pv-theme','light');}})();</script>
 <!--PV-RIDE-HELPER:BEGIN-->
 <script id="pv-ride-strip-helper">
-/* شريط الطلبيات — كيبني HTML بالأرقام الحقيقية ديال نفس الطلبيات المعروضة */
+/* شريط الطلبيات — كيبني HTML بالأرقام والنسب الحقيقية ديال الطلبيات المعروضة */
 (function () {
   function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
   var ICO = {
@@ -1545,15 +1578,18 @@ html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
     box: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>',
     truck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17V6H2v11h1"/><path d="M14 9h4l4 4v4h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>'
   };
-  function node(cls, ico, val, lab) {
-    return '<span class="pv-node ' + cls + (val ? '' : ' zero') + '"><i>' + ico + '</i>' +
-      '<span class="pv-meta"><span class="pv-val">' + num(val) + '</span>' +
+  function pct(v, t) { return t ? Math.max(0, Math.min(100, Math.round(v * 100 / t))) : 0; }
+  function node(cls, ico, val, lab, p) {
+    return '<span class="pv-node ' + cls + (val ? '' : ' zero') + '">' +
+      '<i style="--p:' + p + '%">' + ico + '</i>' +
+      '<span class="pv-meta"><span class="pv-num"><span class="pv-val">' + num(val) +
+        '</span><span class="pv-pct">' + p + '%</span></span>' +
       '<span class="pv-lab">' + lab + '</span></span></span>';
   }
   window.__pvRideStrip = function (q) {
     var rows = (q && typeof q.length === 'number') ? q : [];
-    var c = { call: 0, conf: 0, ship: 0, liv: 0 }, i, o, t, l;
-    for (i = 0; i < rows.length; i++) {
+    var c = { call: 0, conf: 0, ship: 0, liv: 0 }, i, o, t, l, n = rows.length;
+    for (i = 0; i < n; i++) {
       o = rows[i] || {};
       t = String(o.statut == null ? '' : o.statut).trim();
       l = String(o.livraison == null ? '' : o.livraison).trim();
@@ -1562,11 +1598,14 @@ html,body,#root{width:100%;max-width:100%;overflow-x:hidden}
       if (l === 'Expédier vers') { c.ship++; }
       if (l === 'Livrée' || l === 'Rechange') { c.liv++; }
     }
-    return '<span class="pv-flow">' +
-      node('n1', ICO.phone, c.call, 'اتصال') + '<span class="pv-seg s1"></span>' +
-      node('n2', ICO.check, c.conf, 'تأكيد') + '<span class="pv-seg s2"></span>' +
-      node('n3', ICO.box, c.ship, 'إرسال') + '<span class="pv-seg s3"></span>' +
-      node('n4', ICO.truck, c.liv, 'توصيل') +
+    return '<span class="pv-flow"><span class="pv-hair"></span>' +
+      '<span class="pv-tot"><span class="pv-dot"></span><span class="pv-tmeta">' +
+        '<b>' + num(n) + '</b><em>طلبية معروضة</em></span></span>' +
+      '<span class="pv-div"></span>' +
+      node('n1', ICO.phone, c.call, 'اتصال', pct(c.call, n)) + '<span class="pv-seg s1"></span>' +
+      node('n2', ICO.check, c.conf, 'تأكيد', pct(c.conf, n)) + '<span class="pv-seg s2"></span>' +
+      node('n3', ICO.box, c.ship, 'إرسال', pct(c.ship, n)) + '<span class="pv-seg s3"></span>' +
+      node('n4', ICO.truck, c.liv, 'توصيل', pct(c.liv, n)) +
       '</span>';
   };
 })();
