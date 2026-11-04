@@ -178,19 +178,20 @@ python3 scripts/patch-kpi-cards.py            # idempotent
 python3 scripts/patch-kpi-cards.py --check
 ```
 
-- البلاگ `/*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/` كيتزاد قبل `</head>` وكيتحدّث فـ بلاصتو.
-- **بلا كروت**: `.pvk` بلا خلفية/بورد/radius/ظل. الشريط هو اللي كيحمل الخلفية (`.pvk-bar`)،
-  والفصل بينات المحاور بخطوط رقيقة `border-inline-start:1px solid var(--k-line)`.
+- البلاگ `/*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/` كيتزاد قبل `</head>`.
+- **بلا كروت**: `.pvk` بلا خلفية/بورد/radius/ظل. الشريط `.pvk-bar` هو اللي عندو الخلفية،
+  والفصل بخطوط `border-inline-start:1px solid var(--k-line)`.
 - متغيرات الثيم على `.pvk-bar`: `--k-line · --k-ink · --k-mut · --k-dim`
-  (`html[data-pv-theme="dark"] .pvk-bar` كيبدّلهم لـ `#080e13` + خطوط `rgba(255,255,255,.072)`).
-- تايبوغرافي: ليبل 9px/700/tracking .14em بلون `--k-mut` · رقم 26px/700 tabular-nums بلون `--k-ink`
-  · وصف 10px بلون `--k-dim` · أيقونة خطية 16px بلون المحور (بلا خلفية).
-- الحالات: hover = خلفية 3% فقط (بلا حركة) · `is-on` = خط سفلي 2px بلون المحور + تينت 7%.
-- `.pvk-glow` و `::before/::after` **مخفيين** (`display:none`) — هادو كانو «الأشكال».
-- الريسبونسيف: +1280 6 أعمدة (خطوط عمودية) · 640–1279 3 أعمدة · -640 عمودين + خطوط أفقية.
-- ⚠️ درس: ما نستعملوش `--pvk-bg` للخلفية — الـ dark mode كيبدّلو بـ
-  `html[data-pv-theme="dark"] [style*="--pvk-bg: #…"]{--pvk-bg:…!important}`.
-- الأرقام والفلترة ما تبدلوش: كليك = فلتر، كليك ثاني = تحياد الفلتر.
+  (`html[data-pv-theme="dark"] .pvk-bar` → `#080e13` + خطوط `rgba(255,255,255,.072)`).
+- التخطيط: `.pvk-top` = flex (أيقونة 16px خطية بلون المحور + ليبل) · الرقم 26px/700 tabular-nums ·
+  الوصف 10px بـ `margin-inline-start:26px` (محاذي للليبل).
+- حالات: hover = خلفية 2.6% (بلا حركة) · `is-on` = تينت 6% + ليبل بلون المحور + بار 2px فالحد الأيسر
+  (`.pvk.is-on::before`). **ماشي** خط سفلي — كان كيبان مقطوع فمقاس اللوحة.
+- ريسبونسيف: +1280 6 أعمدة · 640–1279 3 أعمدة (min-height 80) · -640 عمودين (رقم 21px، ليبل كيتلوّح).
+- ⚠️ الدرس (تكرّر مرّتين): الـ dark mode كيتحقن **فوق** البلاگ ديالنا (`pv-dark.js` كيزيد stylesheet
+  فالوقت)، فالـ selector العادي كيخسر. الحل: زيد `.pvk-bar` فالسلسلة →
+  `html[data-pv-theme="dark"] .pvk-bar .pvk-lab{…}`. نفس الشي لـ `--pvk-bg`: ما تستعملوهاش للخلفية.
+- كاين ترتيب مهم: قواعد الموبايل لازم تكون **فآخر** البلاگ، وإلا `.pvk-val{26px}` اللي من بعد كيلغيها.
 
 ## صفحة Performance
 

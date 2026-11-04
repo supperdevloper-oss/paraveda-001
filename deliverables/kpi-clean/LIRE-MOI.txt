@@ -1,49 +1,50 @@
 ════════════════════════════════════════════════════════════════════════
- PARAVEDA CRM — شريط KPI «AI CONSOLE» (إحترافي، بلا مربعات)
+ PARAVEDA CRM — شريط KPI «AI CONSOLE» v2 (إحترافي، بلا مربعات، مقاس كامل)
 ════════════════════════════════════════════════════════════════════════
 
-📌 شنو تبدّل
+📌 شنو تبدّل فـ v2 (بعد ملاحظتك على مقاس اللوحة)
 
-   قبل:   6 مربّعات دايرين — كل واحد بخلفية + توهّج + أيقونة ملونة داخل مربّع
-   دابا:  شريط واحد متواصل، مقسّم بخطوط رقيقة (hairlines) — بحال كونسول ديال
-          analytics/AI، ماشي «كروت»:
+   • الأيقونة ما بقاتش ضايعة فالحافة — ولّات **حدا الليبل** (inline) فكل مقاس.
+   • الوصف ولّى محاذي للليبل (hanging indent 26px) — كل شي مصفّف على عمود واحد.
+   • الخط الأحمر اللي كان كيتقطع تحت الكارت المفلتر **تحيّد**:
+     دابا الفلتر = خلفية شفافة + ليبل بلون المحور + **بار 2px** فالحد الأيسر
+     (بحال tab مختار — ماشي خط مقطوع).
+   • الوضع الليلي: الليبلات ولّاو رماديين موحّدين (قبل كانو ملوّنين بـ bug ديال الأولوية).
+   • الموبايل (-640px): الرقم 21px بلا قطع — «10 998 DH» كاملة، والليبل كيتلوّح فـ سطرين.
+   • مقاس اللوحة (640–1279px): 3 أعمدة بخطوط عمودية + أفقية، ارتفاع 80px (compact).
 
-     • ماكاينش مربّعات ولا borders ولا radius ولا توهّجات — الخطوط الرقيقة هي اللي كتفصل
-     • الليبل: 9px UPPERCASE، tracking واسع، رمادي هادئ (ماشي ملوّن)
-     • الرقم: 26px bold، tabular-nums (الأرقام مصفوفة بدقة)، لون ink
-     • الوصف: 10px رمادي خفيف
-     • الأيقونة: خط رقيق 16px بلون المحور (بلا خلفية، بلا مربّع)
-     • hover: خلفية شفافة 3% فقط — بلا حركة، بلا ظل
-     • is-on: خط سفلي 2px بلون المحور + تينت خفيف (7%)
+🧱 البنية
+
+   • بلا كروت: ولا خلفية، ولا border، ولا radius، ولا ظل على .pvk
+   • الشريط واحد (.pvk-bar) هو اللي عندو الخلفية + خطوط hairline بين المحاور
+   • ليبل 9px UPPERCASE tracking .14em · رقم 26px/700 tabular-nums · وصف 10px
+   • hover: خلفية 2.6% فقط (بلا حركة) · reduced-motion محترم
 
 🌗 الوضع الليلي
-   الشريط كيتبدّل بوحدو: أبيض نقي فـ light، و #080e13 فـ dark — نفس الخطوط والأرقام.
-   (المتغيرات --k-line / --k-ink / --k-mut / --k-dim على .pvk-bar)
+   .pvk-bar كيبدّل المتغيرات: --k-line · --k-ink · --k-mut · --k-dim
+   (#080e13 + خطوط rgba(255,255,255,.072))
 
-📱 الريسبونسيف
-   • +1280px : 6 أعمدة بخطوط عمودية بيناتهم
-   • 640–1279: 3 أعمدة (خطوط عمودية + خطوط أفقية)
-   • -640px   : عمودين — كتبقى بحال جدول ميترات ناضي
-
-⚠️ ملاحظات
-   • الأرقام نفسها من CRM (هذا الشهر) — ما تبدّل والو فالداتا.
-   • كليك على أي محور = فلتر، وكليك مرة أخرى = تحياد الفلتر.
-   • سطر «الأرقام محسوبة على: …» باقي محيّد من الـ JSX.
-   • reduced-motion محترم (بلا transitions).
+📱 المقاسات
+   +1280px  : 6 أعمدة (خطوط عمودية فقط)
+   640–1279 : 3 أعمدة (خطوط عمودية + أفقية) — شوف apercu-kpi-tablette.jpg
+   -640px   : عمودين — شوف apercu-kpi-mobile.jpg
 
 📦 الملفات
-   index.html                        ← النسخة المحدّثة (كترفعها لـ public_html)
-   apercu-kpi-cards-light.jpg        ← الشريط وحدو (light, 2x)
-   apercu-kpi-cards-dark.jpg         ← الشريط وحدو (dark, 2x)
-   apercu-kpi-contexte.jpg           ← مكانو فالصفحة (light)
-   apercu-kpi-contexte-dark.jpg      ← مكانو فالصفحة (dark)
-   apercu-kpi-mobile.jpg             ← الموبايل
-   paraveda-kpi-clean.zip            ← zip فيه index.html
-   SHA256.txt                        ← بصمات الملفات
+   index.html                     ← النسخة المحدّثة (ترفعها لـ public_html)
+   apercu-kpi-cards-light.jpg     ← الشريط وحدو، زوم 2x (light)
+   apercu-kpi-cards-dark.jpg      ← الشريط وحدو، زوم 2x (dark)
+   apercu-kpi-contexte.jpg        ← فالصفحة 1560px (light)
+   apercu-kpi-contexte-dark.jpg   ← فالصفحة 1560px (dark)
+   apercu-kpi-tablette.jpg        ← فالصفحة 1000px (3 أعمدة)
+   apercu-kpi-filtre.jpg          ← حالة الفلتر (is-on)
+   apercu-kpi-mobile.jpg          ← 390px
+   paraveda-kpi-clean.zip         ← zip فيه index.html
+   SHA256.txt                     ← بصمات الملفات
 
-🔧 كيفاش تطبّق
-   الطريقة 1: رفع index.html لـ public_html (hard refresh: Ctrl+Shift+R)
-   الطريقة 2: فك paraveda-kpi-clean.zip فوق public_html
+⚠️ الأرقام والفلترة ما تبدلوش: كليك = فلتر، كليك ثاني = تحياد الفلتر.
+   سطر «الأرقام محسوبة على: …» باقي محيّد من الـ JSX.
 
-   السكريبت المولّد: scripts/patch-kpi-cards.py  (idempotent + --check)
-   العلامة فـ index.html:  /*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/
+🔧 التطبيق
+   رفع index.html لـ public_html (Ctrl+Shift+R) أو فك paraveda-kpi-clean.zip فوقها.
+   السكريبت: scripts/patch-kpi-cards.py (idempotent + --check)
+   العلامة: /*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/
