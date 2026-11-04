@@ -1,2 +1,2 @@
-c4138e5c7eae6fec02adbd1ec78ca119a4c93e195cb4c1f6978b4db915d59d4d  index.html
-b4190f7eaa70a4c2c403dde3b95e590d66c756ceb32433bbec0c1b32f0a7042b  paraveda-orders-pulse.zip
+f145f73e617678cd2bdeeb0347a6c37fb45efe79674869cc3c5c857f5a9792ac  index.html
+f7f609d9ee51646fba25a0353bad3dfe2b91f1aad6e6d5269ca88b7aacafc71c  paraveda-orders-pulse.zip

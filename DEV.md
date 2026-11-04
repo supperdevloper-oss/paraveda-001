@@ -158,6 +158,19 @@ python3 scripts/patch-brand-splash.py --check
 - ⚠️ ملاحظة: `<body` كيتكرر داخل سترينغ ديال SheetJS — باش تزيد شي حاجة فـ الـ body
   استعمل `s.index("<body", s.rindex("</head>"))`.
 
+## تحياد سطر «الأرقام محسوبة على» (فراغ KPI)
+
+```
+python3 scripts/patch-remove-kpi-scope.py          # idempotent
+python3 scripts/patch-remove-kpi-scope.py --check
+```
+
+- العنصر `.pvk-scope` (النقطة + «الأرقام محسوبة على: <الفترة>» + شيپ «مفلتر: …») تحيّد **من الـ JSX**
+  (`s.jsxs("div",{className:"pvk-scope",…})` + الفاصلة ديالو) — ماشي غير `display:none`.
+- `.pvk-bar{padding-top:0}` → بطاقات KPI طلعو للفوق واستغلو الفراغ (~20px).
+- ملاحظة: شيپ «مفلتر: …» كان داخل نفس العنصر، حيّدناه معاه — البطاقة المفلترة كتبقى
+  مضوّية (`is-on`) وكليك عليها كيلغي الفلتر.
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
