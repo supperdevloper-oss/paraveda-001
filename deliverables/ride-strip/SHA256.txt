@@ -1,2 +1,2 @@
-d54bdb3b55acd23c3b335611a1635ffe5c415bb20b5b5d05bb196d0581c1a732  index.html
-b84d71da6d8c548b97791119d610da470596f1b822e7fdb26b9e4c3371440424  paraveda-ride-strip.zip
+c4138e5c7eae6fec02adbd1ec78ca119a4c93e195cb4c1f6978b4db915d59d4d  index.html
+1676ab58619ce78257a40dc16bbdc1e99f88c08e7dab404de42edcac2b1f4253  paraveda-ride-strip.zip

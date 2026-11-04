@@ -101,29 +101,23 @@ python3 scripts/build-dark-pages.py --check   # واش محدّث
 
 التباين كامل داز WCAG AA (4.59–16.7:1).
 
-## شريط الحالة فـ الطلبيات (مسار الطلبيات — أرقام حقيقية)
+## شريط الحالة فـ الطلبيات (NEON GAUGES — أرقام حقيقية)
 
-بدّلنا «شريط الشارع» القديم (`pv-street.jpg` + `pv-rider.png` + `pv-client.png` +
-أنيميشن المشاة) بشريط احترافي **بلا حتى صورة**، وكيبين **أرقام حقيقية**:
+بدّلنا «شريط الشارع» القديم (صور + أنيميشن مشاة) بـ**4 عدّادات دائرية** + مجموع:
 
 ```
-python3 scripts/patch-ride-strip.py          # idempotent (علامات /*PV-RIDE:BEGIN*/ + PV-RIDE-HELPER)
-python3 scripts/patch-ride-strip.py --check  # واش مطبّق
+python3 scripts/patch-ride-strip.py          # idempotent (/*PV-RIDE:BEGIN*/ + PV-RIDE-HELPER)
+python3 scripts/patch-ride-strip.py --check
 ```
 
-- **عدّاد المجموع** (طلبية معروضة + نبضة خضراء حيّة) ثم **4 محطات** من اليمين لليسار:
-  اتصال · تأكيد · إرسال · توصيل — SVG داخل chip زجاجي بلون خاص لكل محطة،
-  **حلقة conic ring** حوالين كل أيقونة = نسبة المحطة من المعروض (`style="--p:NN%"`)،
-  رقم كبير بتدرّج ضوئي + نسبة صغيرة حداها؛ مسار متقطّع كيتحرك، شبكة نقطية،
-  شعاع ضوئي كل 7 ثوان، وخيط ضوئي فوق.
-- النسب كتختفي تحت 1320px · عدّاد المجموع تحت 1240px · الشريط كامل تحت 1000px.
-- **الأرقام** كتجي من `window.__pvRideStrip(q)` (script صغير قبل الـ bundle) — `q` هي
-  الطلبيات المفلترة اللي فـ الجدول، بنفس تعريفات الـ CRM:
-  اتصال = `(statut===""||/^Appel/i) && livraison===""` · تأكيد = `statut==="Confirmé"` ·
-  إرسال = `livraison==="Expédier vers"` · توصيل = `livraison ∈ {Livrée,Rechange}`.
-  → كتبدل مع الفترة/البحث/الفلاتر، ودائماً كتطابق «عرض N–M من T».
-- كل الأنيميشن على `transform`/`opacity`/`background-position`؛ `prefers-reduced-motion`
-  كيوقّف كلشي؛ كيتخبى تحت 1000px. ما كاين حتى تغيير فـ الداتا ولا فـ api.php.
+- ⭕ عدّاد المجموع (تدرّج emerald→lime→gold) + «طلبية معروضة»
+- ⭕ 4 حلقات: **اتصال · تأكيد · إرسال · توصيل** — القوس = النسبة من المعروض
+  (`conic-gradient` على `--p`)، ونقطة بيضاء متوهجة فـ آخر القوس
+  (`transform:rotate(calc(var(--p)*3.6deg)) translateY(-16px)`)
+- ▫️ مسار متقطّع + **حزم ضوئية كتدوز** (`.pv-seg::before/::after`)
+- ✨ نبضة توهّج متأخرة لكل حلقة + شعاع ضوئي كيمشي على الشريط
+- الأرقام من `window.__pvRideStrip(q)` — نفس تعريفات الـ CRM (اتصال/تأكيد/إرسال/توصيل)
+- `prefers-reduced-motion` كيوقّف الحركة · النسب < 1320px · المجموع < 1240px · الشريط < 1000px
 
 ## «نبض الطلبيات» — sparkline فـ فيلتر الفترة
 
