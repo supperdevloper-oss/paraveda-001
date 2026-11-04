@@ -150,9 +150,10 @@ python3 scripts/patch-brand-splash.py          # idempotent (علامات /*PV-B
 python3 scripts/patch-brand-splash.py --check
 ```
 
-- العلامة: صندوق isométrique (e-commerce) + 3 نقط عصبية فوق الوجه (AI) + وميض رباعي (spark).
-- **اللوحة المعتمدة: GREEN · GOLD** — tile `#064e3b → #0d9464 → #34d399` + إطار ذهبي
-  `#fde68a → #fbbf24 → #d97706` + نقط/وميض `#fde68a`. (لوحة VIOLET باقية فـ `deliverables/brand-ai`).
+- العلامة: **ORBIT CUBE** — مكعب isométrique (e-commerce) داخل **مدار ذهبي** (orbit) فيه قمر صغير
+  = «التجارة فـ مدار الذكاء». النسخ البديلة (bag / p / cube / violet) فـ `deliverables/brand-ai/concepts/`.
+- **اللوحة المعتمدة: GREEN · GOLD** — tile `#053f31 → #0d9464 → #34d399` + bezel ذهبي
+  `#fde68a → #fbbf24 → #d97706` + المدار/القمر `#fde68a`.
 - **الهيدر**: `patch-header-brand.py` كيحط العلامة 26×26 فـ الشيپ ديال المستخدم (بلاصة الحرف)،
   وكيخلّي صورة المستخدم إلا كانت. ⚠️ ما تستعملش قيم Tailwind اعتباطية (`h-[26px]`) — ماشي فـ البيلد،
   حط القياسات فـ CSS ديالنا.

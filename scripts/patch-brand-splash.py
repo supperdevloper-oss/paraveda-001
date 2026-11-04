@@ -20,44 +20,41 @@ FAV_BEGIN, FAV_END = "<!--PV-BRAND-FAVICON-->", "<!--/PV-BRAND-FAVICON-->"
 
 # ── العلامة (SVG) — نفس ملف deliverables/brand-ai/logo-mark.svg ───────────────
 MARK_INNER = """<defs>
-      <linearGradient id="pvsE" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#064e3b"/><stop offset=".48" stop-color="#0d9464"/><stop offset="1" stop-color="#34d399"/>
-      </linearGradient>
-      <radialGradient id="pvsH" cx=".2" cy=".08" r=".95">
-        <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/><stop offset=".55" stop-color="#ffffff" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="pvsGold" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fde68a"/><stop offset=".5" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/>
-      </linearGradient>
-    </defs>
-    <rect width="48" height="48" rx="13" fill="url(#pvsE)"/>
-    <rect width="48" height="48" rx="13" fill="url(#pvsH)"/>
-    <rect x=".85" y=".85" width="46.3" height="46.3" rx="12.2" fill="none" stroke="url(#pvsGold)" stroke-width="1.3" stroke-opacity=".9"/>
-    <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M24 15.2 33.6 20 24 24.8 14.4 20Z"/>
-      <path d="M14.4 20v9.6L24 34.4l9.6-4.8V20"/>
-      <path d="M24 24.8v9.6"/>
-    </g>
-    <path d="M20.4 20 24 17.6 27.6 20" fill="none" stroke="#fde68a" stroke-opacity=".95" stroke-width=".95" stroke-linecap="round"/>
-    <circle class="pvs-d pvs-d1" cx="20.4" cy="20" r="1.35" fill="#fde68a"/>
-    <circle class="pvs-d pvs-d2" cx="27.6" cy="20" r="1.35" fill="#fde68a"/>
-    <circle class="pvs-d pvs-d3" cx="24" cy="17.6" r="1.35" fill="#fde68a"/>
-    <path d="M38.2 9.4c.5 2.6 1.2 3.3 3.8 3.8-2.6.5-3.3 1.2-3.8 3.8-.5-2.6-1.2-3.3-3.8-3.8 2.6-.5 3.3-1.2 3.8-3.8Z" fill="#fde68a"/>"""
+    <linearGradient id="pvsE" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#053f31"/><stop offset=".46" stop-color="#0d9464"/><stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="pvsGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde68a"/><stop offset=".5" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <radialGradient id="pvsH" cx=".2" cy=".08" r=".95">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/><stop offset=".55" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="48" height="48" rx="13" fill="url(#pvsE)"/>
+  <rect width="48" height="48" rx="13" fill="url(#pvsH)"/>
+  <rect x=".85" y=".85" width="46.3" height="46.3" rx="12.2" fill="none" stroke="url(#pvsGold)" stroke-width="1.2" stroke-opacity=".75"/>
+  <ellipse cx="24" cy="26" rx="17.5" ry="6.4" transform="rotate(-20 24 26)" fill="none" stroke="url(#pvsGold)" stroke-width="1.35" stroke-opacity=".92"/>
+  <circle class="pvs-d pvs-d1" cx="38.6" cy="21.4" r="1.7" fill="#fde68a"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 14.4 33.2 19.1 24 23.8 14.8 19.1Z"/>
+    <path d="M14.8 19.1v9.4L24 33.2l9.2-4.7v-9.4"/>
+    <path d="M24 23.8v9.4"/>
+  </g>
+"""
 
 FAVICON_SVG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">'
                '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'
-               '<stop offset="0" stop-color="#064e3b"/><stop offset=".48" stop-color="#0d9464"/>'
+               '<stop offset="0" stop-color="#053f31"/><stop offset=".46" stop-color="#0d9464"/>'
                '<stop offset="1" stop-color="#34d399"/></linearGradient>'
                '<linearGradient id="gg" x1="0" y1="0" x2="1" y2="1">'
                '<stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#d97706"/></linearGradient></defs>'
                '<rect width="48" height="48" rx="13" fill="url(#g)"/>'
-               '<rect x=".85" y=".85" width="46.3" height="46.3" rx="12.2" fill="none" stroke="url(#gg)" stroke-width="1.3"/>'
+               '<rect x=".85" y=".85" width="46.3" height="46.3" rx="12.2" fill="none" stroke="url(#gg)" stroke-width="1.2"/>'
+               '<ellipse cx="24" cy="26" rx="17.5" ry="6.4" transform="rotate(-20 24 26)" fill="none" stroke="url(#gg)" stroke-width="1.5"/>'
                '<g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
-               '<path d="M24 15.2 33.6 20 24 24.8 14.4 20Z"/><path d="M14.4 20v9.6L24 34.4l9.6-4.8V20"/>'
-               '<path d="M24 24.8v9.6"/></g>'
-               '<g fill="#fde68a"><circle cx="20.4" cy="20" r="1.5"/><circle cx="27.6" cy="20" r="1.5"/>'
-               '<circle cx="24" cy="17.6" r="1.5"/></g>'
-               '<path d="M38.2 9.4c.5 2.6 1.2 3.3 3.8 3.8-2.6.5-3.3 1.2-3.8 3.8-.5-2.6-1.2-3.3-3.8-3.8 2.6-.5 3.3-1.2 3.8-3.8Z" fill="#fde68a"/>'
+               '<path d="M24 14.4 33.2 19.1 24 23.8 14.8 19.1Z"/><path d="M14.8 19.1v9.4L24 33.2l9.2-4.7v-9.4"/>'
+               '<path d="M24 23.8v9.4"/></g>'
+               '<circle cx="38.6" cy="21.4" r="2" fill="#fde68a"/>'
                '</svg>')
 
 FAVICON = (FAV_BEGIN + "\n"

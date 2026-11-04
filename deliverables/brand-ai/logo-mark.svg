@@ -1,28 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Paraveda AI Commerce">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Paraveda">
   <defs>
-    <linearGradient id="pvG" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#4f46e5"/>
-      <stop offset=".52" stop-color="#7c3aed"/>
-      <stop offset="1" stop-color="#06b6d4"/>
+    <linearGradient id="bvE" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#053f31"/><stop offset=".46" stop-color="#0d9464"/><stop offset="1" stop-color="#34d399"/>
     </linearGradient>
-    <radialGradient id="pvH" cx=".22" cy=".1" r=".95">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".40"/>
-      <stop offset=".55" stop-color="#ffffff" stop-opacity="0"/>
+    <linearGradient id="bvGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde68a"/><stop offset=".5" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <radialGradient id="bvH" cx=".2" cy=".08" r=".95">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/><stop offset=".55" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="48" height="48" rx="13" fill="url(#pvG)"/>
-  <rect width="48" height="48" rx="13" fill="url(#pvH)"/>
-  <rect x=".8" y=".8" width="46.4" height="46.4" rx="12.3" fill="none" stroke="#ffffff" stroke-opacity=".24" stroke-width="1.1"/>
-  <g fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M24 15.2 33.6 20 24 24.8 14.4 20Z"/>
-    <path d="M14.4 20v9.6L24 34.4l9.6-4.8V20"/>
-    <path d="M24 24.8v9.6"/>
+  <rect width="48" height="48" rx="13" fill="url(#bvE)"/>
+  <rect width="48" height="48" rx="13" fill="url(#bvH)"/>
+  <rect x=".85" y=".85" width="46.3" height="46.3" rx="12.2" fill="none" stroke="url(#bvGold)" stroke-width="1.2" stroke-opacity=".75"/>
+  <ellipse cx="24" cy="26" rx="17.5" ry="6.4" transform="rotate(-20 24 26)" fill="none" stroke="url(#bvGold)" stroke-width="1.35" stroke-opacity=".92"/>
+  <circle cx="38.6" cy="21.4" r="1.7" fill="#fde68a"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 14.4 33.2 19.1 24 23.8 14.8 19.1Z"/>
+    <path d="M14.8 19.1v9.4L24 33.2l9.2-4.7v-9.4"/>
+    <path d="M24 23.8v9.4"/>
   </g>
-  <path d="M20.4 20 24 17.6 27.6 20" fill="none" stroke="#ffffff" stroke-opacity=".9" stroke-width=".9" stroke-linecap="round"/>
-  <g fill="#ffffff">
-    <circle cx="20.4" cy="20" r="1.35"/>
-    <circle cx="27.6" cy="20" r="1.35"/>
-    <circle cx="24" cy="17.6" r="1.35"/>
-  </g>
-  <path d="M38.2 9.4c.5 2.6 1.2 3.3 3.8 3.8-2.6.5-3.3 1.2-3.8 3.8-.5-2.6-1.2-3.3-3.8-3.8 2.6-.5 3.3-1.2 3.8-3.8Z" fill="#ffffff" fill-opacity=".96"/>
 </svg>

@@ -1,58 +1,54 @@
 ════════════════════════════════════════════════════════════════════════
- PARAVEDA — هوية «AI COMMERCE» (شكل متوافق مع عصر الذكاء الاصطناعي)
+ PARAVEDA — العلامة الجديدة: «ORBIT CUBE» (تجارة إلكترونية فـ مدار الذكاء)
 ════════════════════════════════════════════════════════════════════════
 
-💡 الفكرة (Signification)
+💡 الفكرة
 
-   العلامة كتجمع 3 رموز فـ شكل واحد:
+   المكعب اللي كان قبل، ولّى كيدور فـ **مدار ذهبي** (orbit) فيه قمر صغير:
+   • المكعب (isométrique)  = الطلبية / الباكي  → التجارة الإلكترونية
+   • المدار الذهبي        = النظام اللي كيحيط بالطلبية ويخدمها → AI / أتمتة
+   • القمر الذهبي         = معلومة كتدور حوالين الطلبية (تتبع، تنبؤ، تحليل)
+   • التوهّج واللمعة       = إحساس «تطبيق من عصر الذكاء الاصطناعي»
 
-   ① الطلبية (E-COMMERCE)  → صندوق isométrique = الباكي/الطلبية
-   ② الشبكة العصبية (AI)   → 3 نقط متصلة فوق وجه الصندوق = عقد عصبية
-   ③ الوميض (AI SPARK)     → نجمة رباعية فـ الركن = الذكاء / الأتمتة
+   الدلالة: **التجارة الإلكترونية كتدور فـ مدار الذكاء الاصطناعي** — ماشي زخرفة،
+   ولكن مكعب صغير واضح + حركة (المدار) كتعطي العلامة «حياة» حتى وهي ثابتة.
 
-   ①+②+③ = «طلبية كتخدم بالذكاء الاصطناعي» — تجارة إلكترونية بلا تعقيد.
+🎨 الهوية — GREEN · GOLD
 
-🎨 الهوية — نسختين
+   • tile:      #053f31 → #0d9464 → #34d399  (emerald)
+   • bezel:     #fde68a → #fbbf24 → #d97706  (ذهبي)
+   • orbit/dot: #fde68a
+   • المكعب:    أبيض بخط 2.5 → كيتقرا مزيان من 16px
 
-   ① GREEN · GOLD (المعتمدة دابا فـ التطبيق)
-      • tile emerald: #064e3b → #0d9464 → #34d399
-      • إطار ذهبي (bezel): #fde68a → #fbbf24 → #d97706
-      • النقط العصبية والوميض بلون ذهبي (#fde68a) → إحساس «تجارة + قيمة»
-   ② VIOLET (النسخة الأولى، باقية فـ نفس المجلد)
-      • #4f46e5 → #7c3aed → #06b6d4
-
-   الزوز كيخدمو من 16px (favicon) حتى 512px (أيقونة التطبيق) بلا ما يفقدو الشكل.
+   كتخدم فـ: 16px (favicon) · 26px (هيدر التطبيق) · 88px (شاشة الإقلاع) · 512px (أيقونة)
 
 📦 الملفات
 
-   logo-mark-gold.svg          ← العلامة المعتمدة (أخضر + ذهبي)
-   logo-mark-gold-lockup → logo-lockup-gold.svg / logo-lockup-gold-dark.svg
-   logo-mark.svg               ← النسخة البنفسجية (v1)
-   logo-mark-mono.svg          ← نسخة أحادية (currentColor) للطباعة/الخلفيات الصعبة
-   logo-mark-512.png           ← أيقونة التطبيق (خلفية شفافة)
-   logo-mark-180.png           ← apple-touch-icon (شفافة)
-   logo-lockup.svg             ← العلامة + PARAVEDA + AI COMMERCE OS (نهاري)
-   logo-lockup-dark.svg        ← نفسها للخلفيات الغامقة
-   apercu-logo.jpg             ← مقارنة: VIOLET ضد GREEN·GOLD
-   apercu-header.jpg           ← العلامة فـ الهيدر (بلاصة الحرف «A»)
-   apercu-splash.jpg           ← شاشة الإقلاع فـ التطبيق
-   apercu-apres-splash.jpg     ← التطبيق بعد الإقلاع
-   index.html                  ← التطبيق فيه الهوية (favicon + splash)
+   logo-mark.svg              ← العلامة (ORBIT CUBE)
+   logo-mark-mono.svg         ← نسخة أحادية (currentColor)
+   logo-mark-512.png          ← أيقونة التطبيق (شفافة)
+   logo-mark-180.png          ← apple-touch-icon (شفافة)
+   logo-lockup.svg            ← العلامة + PARAVEDA + AI COMMERCE OS
+   logo-lockup-dark.svg       ← نفسها للخلفيات الغامقة
+   apercu-logo.jpg            ← ورقة الهوية (light/dark/أحجام/lockup)
+   apercu-concepts.jpg        ← المفاهيم: ORBIT ✓ · BOLT BAG · P CIRCUIT · CUBE
+   apercu-header.jpg          ← العلامة فـ هيدر التطبيق (بلاصة حرف ADMIN)
+   apercu-splash.jpg          ← شاشة الإقلاع
+   apercu-apres-splash.jpg    ← التطبيق بعد الإقلاع
+   concepts/                  ← النسخ البديلة (bag / p / cube / violet) إلا بغيتي ترجع
+   index.html                 ← التطبيق فيه العلامة (splash + favicon + هيدر)
 
 🚀 التركيب فـ التطبيق
 
-   • الهيدر: العلامة كتحل بلاصة الحرف الأول ديال المستخدم فـ الشيپ ديال ADMIN
-     (26×26، إطار ذهبي رقيق) — إلا كان المستخدم عندو صورة، كتبقى الصورة
-   • favicon: SVG مدمج (data URI) — كيبان فـ التاب بلا ملف خارجي
-   • شاشة الإقلاع: كتبان ~1.5 ثانية ومن بعد كتطفي بوحدها (fade)
-       - حلقة conic كتدور + نقط عصبية كتضوي بالتتابع + شريط تقدّم
-       - `prefers-reduced-motion` → بلا أنيميشن وكتطفي فـ 400ms
-       - كتّحيد من الـ DOM أوتوماتيكياً (ما كتبقاش عالقة)
+   • الهيدر: 26×26 فـ شيپ المستخدم (بلاصة الحرف) — وإلا كان عندو صورة كتبقى الصورة
+   • favicon: SVG مدمج (data URI) بلا ملف خارجي
+   • splash: حلقة conic كتدور + القمر الذهبي كيضوي + شريط تقدّم، كتطفي بوحدها ~1.5s
+   • prefers-reduced-motion: بلا أنيميشن
 
 🔁 إعادة البناء (للمطوّر)
 
    python3 scripts/patch-brand-splash.py          # splash + favicon (idempotent)
    python3 scripts/patch-header-brand.py          # العلامة فـ الهيدر
-   python3 scripts/patch-brand-splash.py --check && python3 scripts/patch-header-brand.py --check
+   ... --check                                    # للتحقق
 
 ✅ التحقق: sha256sum -c SHA256.txt
