@@ -1,50 +1,43 @@
 ════════════════════════════════════════════════════════════════════════
- PARAVEDA CRM — شريط KPI «AI CONSOLE» v2 (إحترافي، بلا مربعات، مقاس كامل)
+ PARAVEDA CRM — بطاقات KPI الأصلية (مرجّعة كيفما كانت)
 ════════════════════════════════════════════════════════════════════════
 
-📌 شنو تبدّل فـ v2 (بعد ملاحظتك على مقاس اللوحة)
+📌 شنو وقع
 
-   • الأيقونة ما بقاتش ضايعة فالحافة — ولّات **حدا الليبل** (inline) فكل مقاس.
-   • الوصف ولّى محاذي للليبل (hanging indent 26px) — كل شي مصفّف على عمود واحد.
-   • الخط الأحمر اللي كان كيتقطع تحت الكارت المفلتر **تحيّد**:
-     دابا الفلتر = خلفية شفافة + ليبل بلون المحور + **بار 2px** فالحد الأيسر
-     (بحال tab مختار — ماشي خط مقطوع).
-   • الوضع الليلي: الليبلات ولّاو رماديين موحّدين (قبل كانو ملوّنين بـ bug ديال الأولوية).
-   • الموبايل (-640px): الرقم 21px بلا قطع — «10 998 DH» كاملة، والليبل كيتلوّح فـ سطرين.
-   • مقاس اللوحة (640–1279px): 3 أعمدة بخطوط عمودية + أفقية، ارتفاع 80px (compact).
+   1) تجرّبت 2 ديزاينات جديدة (Control Deck، AI Console) — تحيّدو.
+   2) بطاقات KPI رجعو **بحال ما كانو**: 6 مربّعات ملوّنة فاتحة، أيقونة فمربّع
+      بـ gradient، الرقم فوسط، والوصف تحت.
 
-🧱 البنية
+ ✅ الشي الوحيد اللي **باقي** من التعديلات السابقة:
 
-   • بلا كروت: ولا خلفية، ولا border، ولا radius، ولا ظل على .pvk
-   • الشريط واحد (.pvk-bar) هو اللي عندو الخلفية + خطوط hairline بين المحاور
-   • ليبل 9px UPPERCASE tracking .14em · رقم 26px/700 tabular-nums · وصف 10px
-   • hover: خلفية 2.6% فقط (بلا حركة) · reduced-motion محترم
+   • سطر «الأرقام محسوبة على: …» محيّد من الـ JSX (بحال ما طلبتي من قبل)
+   • .pvk-bar{padding-top:0} → البطاقات طالعين الفوق، بلا فراغ
 
-🌗 الوضع الليلي
-   .pvk-bar كيبدّل المتغيرات: --k-line · --k-ink · --k-mut · --k-dim
-   (#080e13 + خطوط rgba(255,255,255,.072))
+   يعني: الشكل ديال البطاقات = الأصلي 100% — بلا تغيير فالألوان ولا فالمقاس
+   ولا فالخطوط ولا فالهوفر. البيانات والفلترة كيفما كانو (كليك = فلتر).
 
-📱 المقاسات
-   +1280px  : 6 أعمدة (خطوط عمودية فقط)
-   640–1279 : 3 أعمدة (خطوط عمودية + أفقية) — شوف apercu-kpi-tablette.jpg
-   -640px   : عمودين — شوف apercu-kpi-mobile.jpg
+🔧 شحال ديال الملفات تبدّل
+
+   scripts/patch-kpi-cards.py   ← تحيّد (ما بقاش)
+   scripts/revert-kpi-cards.py  ← جديد: كيرجّع الشكل الأصلي
+
+       python3 scripts/revert-kpi-cards.py
+       python3 scripts/revert-kpi-cards.py --check
+
+   index.html: ماكاينش بلوك /*PV-KPICARDS:BEGIN*/ … END*/ (تحيّد كامل مع <style> ديالو)
 
 📦 الملفات
-   index.html                     ← النسخة المحدّثة (ترفعها لـ public_html)
-   apercu-kpi-cards-light.jpg     ← الشريط وحدو، زوم 2x (light)
-   apercu-kpi-cards-dark.jpg      ← الشريط وحدو، زوم 2x (dark)
-   apercu-kpi-contexte.jpg        ← فالصفحة 1560px (light)
-   apercu-kpi-contexte-dark.jpg   ← فالصفحة 1560px (dark)
-   apercu-kpi-tablette.jpg        ← فالصفحة 1000px (3 أعمدة)
-   apercu-kpi-filtre.jpg          ← حالة الفلتر (is-on)
+   index.html                     ← النسخة الحالية (ترفعها لـ public_html)
+   apercu-kpi-contexte.jpg        ← 1560px (light)
+   apercu-kpi-contexte-dark.jpg   ← 1560px (dark)
+   apercu-kpi-tablette.jpg        ← 1000px
    apercu-kpi-mobile.jpg          ← 390px
    paraveda-kpi-clean.zip         ← zip فيه index.html
    SHA256.txt                     ← بصمات الملفات
 
-⚠️ الأرقام والفلترة ما تبدلوش: كليك = فلتر، كليك ثاني = تحياد الفلتر.
-   سطر «الأرقام محسوبة على: …» باقي محيّد من الـ JSX.
+📝 ملاحظة صغيرة (بحال قبل): فـ الموبايل الرقم الطويل «10 998 DH» كيتقطع بـ «…».
+   ما مسّيتوش حيت طلبتي بلا تغيير — قول ليا يلا بغيتي نصلحو.
 
 🔧 التطبيق
-   رفع index.html لـ public_html (Ctrl+Shift+R) أو فك paraveda-kpi-clean.zip فوقها.
-   السكريبت: scripts/patch-kpi-cards.py (idempotent + --check)
-   العلامة: /*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/
+   رفع index.html لـ public_html + Ctrl+Shift+R
+   ولا فك paraveda-kpi-clean.zip فوق public_html

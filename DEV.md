@@ -171,27 +171,18 @@ python3 scripts/patch-remove-kpi-scope.py --check
 - ملاحظة: شيپ «مفلتر: …» كان داخل نفس العنصر، حيّدناه معاه — البطاقة المفلترة كتبقى
   مضوّية (`is-on`) وكليك عليها كيلغي الفلتر.
 
-## بطاقات KPI — «AI CONSOLE» (شريط متواصل، بلا مربعات)
+## بطاقات KPI — الشكل الأصلي (مرجّع)
 
 ```
-python3 scripts/patch-kpi-cards.py            # idempotent
-python3 scripts/patch-kpi-cards.py --check
+python3 scripts/revert-kpi-cards.py            # idempotent
+python3 scripts/revert-kpi-cards.py --check
 ```
 
-- البلاگ `/*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/` كيتزاد قبل `</head>`.
-- **بلا كروت**: `.pvk` بلا خلفية/بورد/radius/ظل. الشريط `.pvk-bar` هو اللي عندو الخلفية،
-  والفصل بخطوط `border-inline-start:1px solid var(--k-line)`.
-- متغيرات الثيم على `.pvk-bar`: `--k-line · --k-ink · --k-mut · --k-dim`
-  (`html[data-pv-theme="dark"] .pvk-bar` → `#080e13` + خطوط `rgba(255,255,255,.072)`).
-- التخطيط: `.pvk-top` = flex (أيقونة 16px خطية بلون المحور + ليبل) · الرقم 26px/700 tabular-nums ·
-  الوصف 10px بـ `margin-inline-start:26px` (محاذي للليبل).
-- حالات: hover = خلفية 2.6% (بلا حركة) · `is-on` = تينت 6% + ليبل بلون المحور + بار 2px فالحد الأيسر
-  (`.pvk.is-on::before`). **ماشي** خط سفلي — كان كيبان مقطوع فمقاس اللوحة.
-- ريسبونسيف: +1280 6 أعمدة · 640–1279 3 أعمدة (min-height 80) · -640 عمودين (رقم 21px، ليبل كيتلوّح).
-- ⚠️ الدرس (تكرّر مرّتين): الـ dark mode كيتحقن **فوق** البلاگ ديالنا (`pv-dark.js` كيزيد stylesheet
-  فالوقت)، فالـ selector العادي كيخسر. الحل: زيد `.pvk-bar` فالسلسلة →
-  `html[data-pv-theme="dark"] .pvk-bar .pvk-lab{…}`. نفس الشي لـ `--pvk-bg`: ما تستعملوهاش للخلفية.
-- كاين ترتيب مهم: قواعد الموبايل لازم تكون **فآخر** البلاگ، وإلا `.pvk-val{26px}` اللي من بعد كيلغيها.
+- جرّبنا جوج ديزاينات (Control Deck الزجاجي، AI Console بلا مربعات) — **تحيّدو** بطلب المستخدم.
+- `revert-kpi-cards.py` كيحيّد بلوك `<style>/*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/</style>`
+  (الماركر + الـ wrapper ديالو) → البطاقات كترجع للـ CSS الأصلي `.pvk` / `--pvk-bg`.
+- **باقي** من التعديلات: تحياد سطر «الأرقام محسوبة على» + `.pvk-bar{padding-top:0}`.
+- ⚠️ ما نزيدوش ديزاين جديد على البطاقات بلا طلب صريح — المستخدم بغاهم كيفما كانو.
 
 ## صفحة Performance
 
