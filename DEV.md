@@ -143,6 +143,22 @@ python3 scripts/patch-orders-pulse.py --check
   أي `stroke-dashoffset` animation) — الأنيميشن باقي غير فـ `.pv-pp-dot` (نبضة) و`prefers-reduced-motion`
 - كتختفي تحت 1240px · الرسم كيصغر تحت 1420px
 
+## هوية «AI Commerce» — favicon + شاشة الإقلاع
+
+```
+python3 scripts/patch-brand-splash.py          # idempotent (علامات /*PV-BRAND:BEGIN*/ + PV-BRAND-SPLASH)
+python3 scripts/patch-brand-splash.py --check
+```
+
+- العلامة: صندوق isométrique (e-commerce) + 3 نقط عصبية فوق الوجه (AI) + وميض رباعي (spark)،
+  داخل tile بتدرّج `#4f46e5 → #7c3aed → #06b6d4`.
+- favicon مدمج (data URI SVG) — بلا ملف خارجي.
+- splash: حلقة conic كتدور + نقط كتضوي بالتتابع + شريط تقدّم، كتطفي بوحدها بعد ~1.5s
+  وكتّحيد من الـ DOM (safety timer 6s)، و`prefers-reduced-motion` كيوقّف كلشي.
+- الملفات: `deliverables/brand-ai/` (SVG + PNG 512/180 + lockups + previews).
+- ⚠️ ملاحظة: `<body` كيتكرر داخل سترينغ ديال SheetJS — باش تزيد شي حاجة فـ الـ body
+  استعمل `s.index("<body", s.rindex("</head>"))`.
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
