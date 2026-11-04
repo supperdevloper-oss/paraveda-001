@@ -171,6 +171,23 @@ python3 scripts/patch-remove-kpi-scope.py --check
 - ملاحظة: شيپ «مفلتر: …» كان داخل نفس العنصر، حيّدناه معاه — البطاقة المفلترة كتبقى
   مضوّية (`is-on`) وكليك عليها كيلغي الفلتر.
 
+## بطاقات KPI — «Control Deck» (شكل جديد)
+
+```
+python3 scripts/patch-kpi-cards.py            # idempotent
+python3 scripts/patch-kpi-cards.py --check
+```
+
+- البلاگ `/*PV-KPICARDS:BEGIN*/ … /*PV-KPICARDS:END*/` كيتزاد قبل `</head>` وكيتحدّث فـ بلاصتو.
+- الكارت ولّى زجاج غامق: `radial-gradient(--pvk-rg)` فوق `linear-gradient(160deg,#07140f,#0b1e18,#06110d)`،
+  radius 15px، `min-height:96px`، dot-grid داخلي (`::before` + mask)، وخيط لوني فوق (`::after`).
+- الأيقونة gradient بلون الكارت، الرقم أبيض 21px، الليبل بلون الكارت (`brightness(1.85)`)، الوصف `#8ea8bd`.
+- hover: `translateY(-3px)` + هالة بلون الكارت. `is-on`: حلقة 2px. `prefers-reduced-motion`: ترانزيشن 0.
+- ⚠️ **درس مهم:** ما نستعملوش `--pvk-bg` للخلفية — الـ dark mode كيبدّل هاد المتغير
+  بـ `html[data-pv-theme="dark"] [style*="--pvk-bg: #…"]{--pvk-bg:…!important}`، فـ الكارت كيرجع لون باهت.
+  الخلفية كيتكتب `background:… !important` مباشرة فـ `.pvk`.
+- الأرقام والفلترة ما تبدلوش: نفس داتا CRM، كليك = فلتر، كليك ثاني = تحياد الفلتر.
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
