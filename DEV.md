@@ -101,24 +101,25 @@ python3 scripts/build-dark-pages.py --check   # واش محدّث
 
 التباين كامل داز WCAG AA (4.59–16.7:1).
 
-## شريط الحالة فـ الطلبيات (Control Tower)
+## شريط الحالة فـ الطلبيات (مسار الطلبيات — أرقام حقيقية)
 
-بدّلنا «شريط الشارع» القديم (`pv-street.jpg` + `pv-rider.png` + `pv-client.png` + أنيميشن
-المشاة) بشريط احترافي **بلا حتى صورة**: SVG + CSS خالص، داكن فـ الوضعين (بحال شاشة
-مراقبة) وسط شريط الأدوات ديال الطلبيات.
+بدّلنا «شريط الشارع» القديم (`pv-street.jpg` + `pv-rider.png` + `pv-client.png` +
+أنيميشن المشاة) بشريط احترافي **بلا حتى صورة**، وكيبين **أرقام حقيقية**:
 
 ```
-python3 scripts/patch-ride-strip.py          # كيبدلو (idempotent، علامات /*PV-RIDE:BEGIN*/)
+python3 scripts/patch-ride-strip.py          # idempotent (علامات /*PV-RIDE:BEGIN*/ + PV-RIDE-HELPER)
 python3 scripts/patch-ride-strip.py --check  # واش مطبّق
 ```
 
-**فيه:** 4 محطات بالعربية (اتصال → تأكيد → إرسال → توصيل) من اليمين لليسار، كل وحدة
-أيقونة SVG داخل chip بلمعة indigo (والتوصيل بلون emerald)، مسار متقطّع كيتحرك
-(`repeating-linear-gradient` + `background-position`)، شبكة نقطية، وشعاع ضوئي كيدوز
-كل 7 ثوان. كلشي `transform`/`opacity`/`background-position` — خفيف على الـ CPU.
-
-**الوصول:** `@media (max-width:1000px)` كيخبيه (بحال القديم)، و`prefers-reduced-motion`
-كيوقّف كل الأنيميشن. ما كاين حتى تعديل على الداتا ولا على الحسابات.
+- 4 محطات من اليمين لليسار: **اتصال · تأكيد · إرسال · توصيل** (SVG داخل chip زجاجي،
+  والتوصيل بلون emerald)، مسار متقطّع كيتحرك، شبكة نقطية، وشعاع ضوئي كل 7 ثوان.
+- **الأرقام** كتجي من `window.__pvRideStrip(q)` (script صغير قبل الـ bundle) — `q` هي
+  الطلبيات المفلترة اللي فـ الجدول، بنفس تعريفات الـ CRM:
+  اتصال = `(statut===""||/^Appel/i) && livraison===""` · تأكيد = `statut==="Confirmé"` ·
+  إرسال = `livraison==="Expédier vers"` · توصيل = `livraison ∈ {Livrée,Rechange}`.
+  → كتبدل مع الفترة/البحث/الفلاتر، ودائماً كتطابق «عرض N–M من T».
+- كل الأنيميشن على `transform`/`opacity`/`background-position`؛ `prefers-reduced-motion`
+  كيوقّف كلشي؛ كيتخبى تحت 1000px. ما كاين حتى تغيير فـ الداتا ولا فـ api.php.
 
 ## صفحة Performance
 
