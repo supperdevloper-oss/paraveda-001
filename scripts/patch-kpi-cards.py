@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-patch-kpi-cards.py — كيعطي بطاقات KPI شكل «Control Deck» غامق (زجاج + توهّج + شبكة نقطية)
-متوافق مع هوية ORBIT CUBE وشريط NEON GAUGES.
+patch-kpi-cards.py — شريط KPI «AI CONSOLE»: شريط واحد متواصل مقسّم بخطوط رقيقة (بلا مربعات/توهّجات)
+متوافق مع الوضع الليلي (theme-aware) وباقي الهوية.
 
     python3 scripts/patch-kpi-cards.py
     python3 scripts/patch-kpi-cards.py --check
@@ -17,52 +17,82 @@ FILE = os.path.join(ROOT, "public_html", "index.html")
 CSS_BEGIN, CSS_END = "/*PV-KPICARDS:BEGIN*/", "/*PV-KPICARDS:END*/"
 
 NEW_CSS = CSS_BEGIN + r"""
-/* ===== بطاقات KPI — Control Deck (زجاج غامق + توهّج + شبكة نقطية) ===== */
-.pvk{
- background:
-   radial-gradient(130% 140% at 0% 0%,var(--pvk-rg),transparent 58%),
-   linear-gradient(160deg,#07140f 0%,#0b1e18 58%,#06110d 100%) !important;
- --pvk-bd:rgba(148,163,184,.22) !important;
- min-height:96px!important;
- padding:11px 12px!important;
- border-radius:15px!important;
- box-shadow:inset 0 0 0 1px rgba(148,163,184,.10),inset 0 1px 0 rgba(255,255,255,.08),
-  0 12px 26px -22px #020617!important;
- transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
- isolation:isolate}
-/* شبكة نقطية داخلية */
-.pvk::before{content:"";position:absolute;inset:-10px;z-index:0;pointer-events:none;
- background-image:radial-gradient(rgba(148,163,184,.20) 1px,transparent 1px);
- background-size:11px 11px;opacity:.45;
- -webkit-mask-image:radial-gradient(120% 120% at 50% 0%,#000 30%,transparent 78%);
- mask-image:radial-gradient(120% 120% at 50% 0%,#000 30%,transparent 78%)}
-/* خيط لوني فوق */
-.pvk::after{content:"";position:absolute;top:0;inset-inline:0;height:1.5px;z-index:2;
- background:linear-gradient(90deg,var(--pvk),color-mix(in srgb,var(--pvk) 40%,transparent) 38%,transparent 72%);
- opacity:.85;filter:drop-shadow(0 1px 6px var(--pvk-rg))}
-.pvk-glow{opacity:.16!important}
-.pvk:hover{transform:translateY(-3px)!important;
- box-shadow:inset 0 0 0 1px rgba(148,163,184,.16),0 18px 34px -20px var(--pvk-rg),
-  0 0 0 1px var(--pvk)!important}
-.pvk:hover .pvk-glow{opacity:.32!important}
-.pvk.is-on{border-color:var(--pvk)!important;
- box-shadow:0 0 0 2px var(--pvk-rg),inset 0 0 0 1px var(--pvk),0 18px 34px -20px var(--pvk-rg)!important}
+/* ===== شريط KPI — «AI CONSOLE» (شريط متواصل + خطوط رقيقة + أرقام كبيرة) ===== */
+.pvk-bar{
+ --k-line:rgba(15,23,42,.10);
+ --k-ink:#0b1220; --k-mut:#5f6f80; --k-dim:#8b98a6;
+ padding:0!important;
+ background:#fff!important;
+ background-image:linear-gradient(180deg,#fcfdfe 0%,#ffffff 100%)!important;
+ border-bottom:1px solid rgba(15,23,42,.08)!important;
+ box-shadow:none!important}
+html[data-pv-theme="dark"] .pvk-bar{
+ --k-line:rgba(255,255,255,.072);
+ --k-ink:#f3f8fc; --k-mut:#8ba0b1; --k-dim:#6b7c8c;
+ background:#080e13!important;
+ background-image:linear-gradient(180deg,#0b1219 0%,#070c11 100%)!important;
+ border-bottom-color:rgba(255,255,255,.06)!important}
 
-.pvk-ico{background:linear-gradient(160deg,var(--pvk),color-mix(in srgb,var(--pvk) 55%,#04120c))!important;
- box-shadow:0 8px 18px -8px var(--pvk-rg),inset 0 0 0 1px rgba(255,255,255,.18)!important;
- border-radius:10px!important;width:32px!important;height:32px!important}
-.pvk-lab{color:var(--pvk)!important;filter:brightness(1.85) saturate(1.25)!important;
- letter-spacing:.1em!important;font-size:8.5px!important;opacity:.95}
-.pvk-lab::after{content:"";display:block}
-.pvk-val{color:#ffffff!important;font-size:21px!important;letter-spacing:-.03em!important;
- text-shadow:0 1px 12px rgba(255,255,255,.14)}
-.pvk-desc{color:#8ea8bd!important;font-size:9.5px!important;opacity:.92}
-.pvk-arw{color:#6f8398!important}
-.pvk-badge.up{background:rgba(16,185,129,.16)!important;color:#6ee7b7!important;
- box-shadow:inset 0 0 0 1px rgba(52,211,153,.3)}
-.pvk-badge.dn{background:rgba(239,68,68,.16)!important;color:#fca5a5!important;
- box-shadow:inset 0 0 0 1px rgba(248,113,113,.3)}
-.pvk-top,.pvk-mid,.pvk-desc,.pvk-badge{position:relative;z-index:2}
+.pvk-wrap{gap:0!important}
+
+.pvk{
+ position:relative;
+ background:none!important;
+ border:0;border-bottom:1px solid var(--k-line);
+ border-radius:0!important;
+ box-shadow:none!important;
+ min-height:88px!important;
+ padding:13px 16px!important;
+ text-align:start!important;
+ isolation:auto;
+ transition:background .16s ease,box-shadow .16s ease!important}
+/* خطوط الفصل بين الأعمدة فكل مقاس (RTL: inline-start = اليمين) */
+.pvk{border-inline-start:0}
+@media(max-width:639px){
+ .pvk:nth-child(2n){border-inline-start:1px solid var(--k-line)}}
+@media(min-width:640px) and (max-width:1279px){
+ .pvk:nth-child(3n+2),.pvk:nth-child(3n){border-inline-start:1px solid var(--k-line)}}
+@media(min-width:1280px){
+ .pvk{border-bottom:0}
+ .pvk:nth-child(n+2){border-inline-start:1px solid var(--k-line)}}
+.pvk:hover{transform:none!important;background:rgba(15,23,42,.026)!important;box-shadow:none!important}
+html[data-pv-theme="dark"] .pvk:hover{background:rgba(255,255,255,.036)!important}
+.pvk.is-on{background:color-mix(in srgb,var(--pvk) 7%,transparent)!important;
+ box-shadow:inset 0 -2px 0 var(--pvk)!important;border-color:var(--k-line)}
+.pvk-glow,.pvk::before,.pvk::after{display:none!important}
+
+.pvk-top{display:block!important;position:relative!important;text-align:start!important}
+.pvk-ico{position:absolute!important;inset-inline-end:0!important;inset-inline-start:auto!important;top:0!important;
+ width:16px!important;height:16px!important;
+ background:none!important;box-shadow:none!important;border-radius:0!important;
+ color:var(--pvk)!important;opacity:.95;transform:none!important}
+.pvk-ico svg{width:16px!important;height:16px!important;stroke-width:1.9!important}
+.pvk:hover .pvk-ico{opacity:1;transform:none!important}
+
+.pvk-mid{display:block!important;padding:0!important;text-align:start!important}
+.pvk-lab{color:var(--k-mut)!important;filter:none!important;
+ font-size:9px!important;font-weight:700!important;letter-spacing:.14em!important;
+ line-height:1.35!important;white-space:nowrap!important;
+ padding-inline-end:24px}
+.pvk-val{color:var(--k-ink)!important;
+ font-size:26px!important;font-weight:700!important;letter-spacing:-.025em!important;
+ line-height:1!important;margin-top:9px!important;text-align:start!important;
+ text-shadow:none!important;font-variant-numeric:tabular-nums}
+.pvk-desc{color:var(--k-dim)!important;
+ font-size:10px!important;font-weight:500!important;letter-spacing:0;
+ margin-top:8px!important;text-align:start!important;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvk-arw{display:none!important}
+
+.pvk-badge{background:transparent!important;box-shadow:none!important;
+ padding:0!important;border-radius:0!important;
+ margin:8px 0 0!important;margin-inline:0!important;
+ font-size:10px!important;font-weight:700!important;letter-spacing:.01em}
+.pvk-badge.up{color:#0b8f5f!important}
+.pvk-badge.dn{color:#c22a2a!important}
+html[data-pv-theme="dark"] .pvk-badge.up{color:#3ddc97!important}
+html[data-pv-theme="dark"] .pvk-badge.dn{color:#ff8f8f!important}
+
 @media (prefers-reduced-motion:reduce){.pvk{transition:none!important}}
 """ + CSS_END
 
@@ -83,13 +113,13 @@ def main():
     changed = s != src
     if check:
         if changed:
-            print("✗ بطاقات KPI الجديدة ما مطبّقة (شغّل: python3 scripts/patch-kpi-cards.py)")
+            print("✗ شريط KPI الجديد ما مطبّق (شغّل: python3 scripts/patch-kpi-cards.py)")
             return 1
-        print("✓ بطاقات KPI الجديدة مطبّقة")
+        print("✓ شريط KPI «AI Console» مطبّق")
         return 0
     if changed:
         io.open(FILE, "w", encoding="utf-8").write(s)
-    print("✓ %s — بطاقات KPI (Control Deck)" % ("تحدّث" if changed else "مضبوط"))
+    print("✓ %s — شريط KPI (AI Console)" % ("تحدّث" if changed else "مضبوط"))
     return 0
 
 
