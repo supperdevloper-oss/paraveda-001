@@ -125,6 +125,24 @@ python3 scripts/patch-ride-strip.py --check  # واش مطبّق
 - كل الأنيميشن على `transform`/`opacity`/`background-position`؛ `prefers-reduced-motion`
   كيوقّف كلشي؛ كيتخبى تحت 1000px. ما كاين حتى تغيير فـ الداتا ولا فـ api.php.
 
+## «نبض الطلبيات» — sparkline فـ فيلتر الفترة
+
+```
+python3 scripts/patch-orders-pulse.py          # idempotent (علامات /*PV-PULSE:BEGIN*/ + PV-PULSE-HELPER)
+python3 scripts/patch-orders-pulse.py --check
+```
+
+شريحة زجاجية غامقة كتزاد فـ آخر `.pv-period` (حدا الأزرار: اليوم · أمس · … · Custom):
+
+- عنوان «نبض الطلبيات — آخر 30 يوم» + مجموع 30 يوم + شارة اتجاه (▲/▼ ٪ مقابل الـ30 يوم السابقة)
+- sparkline SVG: خط indigo = طلبيات كل نهار، خط emerald = المؤكدة فـ نفس النهار
+- hover: خط إرشاد + tooltip (اليوم · التاريخ · طلبيات · مؤكد)
+- الداتا من `localStorage.paraveda_orders_v5` (بلا `_del`)، `statut === "Confirmé"` = مؤكد،
+  وتحديث ذاتي كل 12 ثانية إلا تبدلت → **بلا أي طلب للسيرفر** وبلا تعديل فـ الداتا
+- `.pv-pp-line/.pv-pp-line2` **بلا أنيميشن** (React كيعاود الـ innerHTML فـ كل render وكيقطع
+  أي `stroke-dashoffset` animation) — الأنيميشن باقي غير فـ `.pv-pp-dot` (نبضة) و`prefers-reduced-motion`
+- كتختفي تحت 1240px · الرسم كيصغر تحت 1420px
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
