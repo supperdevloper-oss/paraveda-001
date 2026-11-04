@@ -12,27 +12,37 @@
 
    ①+②+③ = «طلبية كتخدم بالذكاء الاصطناعي» — تجارة إلكترونية بلا تعقيد.
 
-🎨 الهوية
+🎨 الهوية — نسختين
 
-   • تدرّج indigo → violet → cyan  (#4f46e5 → #7c3aed → #06b6d4)
-   • إطار داخلي أبيض 24% + لمعة زجاجية فـ الركن → إحساس «تطبيق AI حديث»
-   • كتخدم فـ 16px (favicon) حتى 512px (أيقونة التطبيق) بلا ما تفقد الشكل
+   ① GREEN · GOLD (المعتمدة دابا فـ التطبيق)
+      • tile emerald: #064e3b → #0d9464 → #34d399
+      • إطار ذهبي (bezel): #fde68a → #fbbf24 → #d97706
+      • النقط العصبية والوميض بلون ذهبي (#fde68a) → إحساس «تجارة + قيمة»
+   ② VIOLET (النسخة الأولى، باقية فـ نفس المجلد)
+      • #4f46e5 → #7c3aed → #06b6d4
+
+   الزوز كيخدمو من 16px (favicon) حتى 512px (أيقونة التطبيق) بلا ما يفقدو الشكل.
 
 📦 الملفات
 
-   logo-mark.svg               ← العلامة (النسخة الأصلية، gradients)
+   logo-mark-gold.svg          ← العلامة المعتمدة (أخضر + ذهبي)
+   logo-mark-gold-lockup → logo-lockup-gold.svg / logo-lockup-gold-dark.svg
+   logo-mark.svg               ← النسخة البنفسجية (v1)
    logo-mark-mono.svg          ← نسخة أحادية (currentColor) للطباعة/الخلفيات الصعبة
    logo-mark-512.png           ← أيقونة التطبيق (خلفية شفافة)
    logo-mark-180.png           ← apple-touch-icon (شفافة)
    logo-lockup.svg             ← العلامة + PARAVEDA + AI COMMERCE OS (نهاري)
    logo-lockup-dark.svg        ← نفسها للخلفيات الغامقة
-   apercu-logo.jpg             ← ورقة الهوية (light/dark/أحجام/lockup)
+   apercu-logo.jpg             ← مقارنة: VIOLET ضد GREEN·GOLD
+   apercu-header.jpg           ← العلامة فـ الهيدر (بلاصة الحرف «A»)
    apercu-splash.jpg           ← شاشة الإقلاع فـ التطبيق
    apercu-apres-splash.jpg     ← التطبيق بعد الإقلاع
    index.html                  ← التطبيق فيه الهوية (favicon + splash)
 
 🚀 التركيب فـ التطبيق
 
+   • الهيدر: العلامة كتحل بلاصة الحرف الأول ديال المستخدم فـ الشيپ ديال ADMIN
+     (26×26، إطار ذهبي رقيق) — إلا كان المستخدم عندو صورة، كتبقى الصورة
    • favicon: SVG مدمج (data URI) — كيبان فـ التاب بلا ملف خارجي
    • شاشة الإقلاع: كتبان ~1.5 ثانية ومن بعد كتطفي بوحدها (fade)
        - حلقة conic كتدور + نقط عصبية كتضوي بالتتابع + شريط تقدّم
@@ -41,7 +51,8 @@
 
 🔁 إعادة البناء (للمطوّر)
 
-   python3 scripts/patch-brand-splash.py          # idempotent
-   python3 scripts/patch-brand-splash.py --check
+   python3 scripts/patch-brand-splash.py          # splash + favicon (idempotent)
+   python3 scripts/patch-header-brand.py          # العلامة فـ الهيدر
+   python3 scripts/patch-brand-splash.py --check && python3 scripts/patch-header-brand.py --check
 
 ✅ التحقق: sha256sum -c SHA256.txt
