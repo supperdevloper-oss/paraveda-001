@@ -184,6 +184,24 @@ python3 scripts/revert-kpi-cards.py --check
 - **باقي** من التعديلات: تحياد سطر «الأرقام محسوبة على» + `.pvk-bar{padding-top:0}`.
 - ⚠️ ما نزيدوش ديزاين جديد على البطاقات بلا طلب صريح — المستخدم بغاهم كيفما كانو.
 
+## الإجراءات الجماعية فـ الطلبيات (bulk) + شريط التبويبات
+
+```
+python3 scripts/patch-orders-bulk.py          # idempotent
+python3 scripts/patch-orders-bulk.py --check
+```
+
+- البلاگ `<!--PV-BULK:BEGIN--> … <!--PV-BULK:END-->` قبل `</head>` (فيه `<style>` + `<script>`).
+  ⚠️ الماركرات لازم تكون HTML comments — `/* */` فـ الـ head كيتفسّرو نص وكيبانو فالصفحة.
+- التحديد الجماعي (checkbox + تحديد الكل + حذف/تصدير المحدد) **موجود أصلاً** فـ الـ JSX؛
+  هاد الباتش كيجمّل غير الشكل: `.pv-bulk` (pill للعدّاد + أزرار 30px + ألوان بالأدوار + select 142px).
+- الـ JS كيزيد غير `class` على شريط الإجراءات (ماشي كيعاود يبني DOM):
+  كيقلّب على `<b>` فيه «محدد:» → كيزيد `.pv-bulk` على الأب، بـ MutationObserver + rAF debounce.
+- `.pv-main-nav` (شريط التبويبات): عند ≤1780px كيتلوّح لسطرين (`flex-wrap`) بدل ما يتقطع،
+  + سكرول 3px + تصغير تدريجي للتبويبات.
+- ⚠️ ما نستعملوش `overflow-x:auto` بوحدها على `.pv-main-nav`: كانت كتقطع
+  «Waiting CMD» و«Import Excel/CSV/JSON» من الحافة بلا ما يبان دليل على السكرول.
+
 ## صفحة Performance
 
 تبويب جديد فـ الـ SPA كيتحمّل `performance.html` داخل iframe (بحال Suivi des Retours):
