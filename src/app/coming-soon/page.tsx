@@ -1,0 +1,7 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { COMING_SOON_TOOLS } from '@/lib/tools/registry';
+import { SITE, siteUrl } from '@/lib/site-config';
+const pageDescription='A transparent list of file tools that are not available yet.';
+export const metadata:Metadata={title:'Coming Soon',description:pageDescription,alternates:{canonical:siteUrl('/coming-soon/')},openGraph:{title:`Coming Soon | ${SITE.name}`,description:pageDescription,url:siteUrl('/coming-soon/'),siteName:SITE.name,type:'website',images:[{url:'/og-image.png',width:1200,height:630,alt:`${SITE.name} — file tools roadmap`}]},twitter:{card:'summary_large_image',title:`Coming Soon | ${SITE.name}`,description:pageDescription,images:['/og-image.png']},robots:{index:false,follow:false}};
+export default function ComingSoonPage(){return <div className="cf-container cf-directory"><header className="cf-page-heading"><span className="cf-eyebrow">ROADMAP</span><h1>Coming soon</h1><p>These features are not available yet. They are listed for transparency only; there are no fake conversion buttons.</p></header><div className="cf-planned-grid">{COMING_SOON_TOOLS.map(t=><article className="cf-planned-card" key={t.slug}><span className="cf-badge cf-badge-gray">Not available</span><h2>{t.name}</h2><p>{t.plannedReason}</p></article>)}</div><p className="cf-back-link"><Link href="/tools/">Browse working tools →</Link></p></div>}

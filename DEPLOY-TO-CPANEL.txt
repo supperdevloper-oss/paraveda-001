@@ -1,0 +1,30 @@
+CONVERTFLOW — UPLOAD TO CPANEL / APACHE
+
+FASTEST DEPLOY (no Node.js on your hosting account)
+
+1) Download and extract ConvertFlow-hosting-package.zip on your computer.
+2) Open the upload-now folder.
+3) In cPanel, open File Manager and go to public_html (or your domain's document root). In File Manager settings, enable “Show Hidden Files (dotfiles)” so .htaccess is visible.
+4) Upload the CONTENTS of upload-now into public_html. Do not upload the upload-now folder itself.
+   The files include index.html, route folders, _next, vendor, workers, .htaccess,
+   robots.txt and sitemap.xml. Keep their folder structure intact.
+5) Visit your domain and try /tools/, /jpg-to-png/ and /merge-pdf/.
+
+The static site does not need Node, PHP, a database, an API key, or rewrite rules.
+If your host complains about .htaccess, remove only that file and ask hosting
+support to serve .wasm as application/wasm and .mjs as JavaScript.
+
+YOUR DOMAIN AND SEARCH ENGINES
+
+The prebuilt files are configured for the supplied canonical origin https://convertio.si
+(without www), including per-page canonical tags and sitemap URLs. If you prefer a
+different canonical host, rebuild with NEXT_PUBLIC_SITE_URL set to that HTTPS origin,
+then upload the new out/ contents. See README.md. For Google/Bing verification and sitemap submission, follow SEO-INDEXING-CHECKLIST.txt.
+
+IMPORTANT LIMITS
+
+Image/PDF work stays in this browser. Audio/video uses a roughly 32 MB FFmpeg
+WebAssembly engine and can be slow or memory-heavy, especially on phones. The
+site has file-size limits; a browser may fail below those limits due to memory.
+Hosting is not guaranteed free: bandwidth, storage and domain charges depend on
+your provider. Keep THIRD_PARTY_NOTICES.md and LICENSES/ if you redistribute.

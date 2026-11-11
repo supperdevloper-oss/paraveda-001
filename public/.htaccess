@@ -1,0 +1,19 @@
+# ConvertFlow static export for Apache/cPanel.
+# Canonical host is https://convertio.si (non-www). Ensure DNS and SSL cover both
+# the apex and www host before enabling these redirects.
+RewriteEngine On
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\.convertio\.si$ [NC]
+RewriteRule ^ https://convertio.si%{REQUEST_URI} [R=301,L]
+
+AddType application/wasm .wasm
+AddType text/javascript .mjs
+AddType application/javascript .js
+AddType application/json .json
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(wasm|mjs|js)$">
+    Header set Cache-Control "public, max-age=604800"
+    Header set X-Content-Type-Options "nosniff"
+  </FilesMatch>
+</IfModule>

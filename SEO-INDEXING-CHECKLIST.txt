@@ -1,0 +1,40 @@
+CONVERTIO.SI — SEARCH INDEXING CHECKLIST
+
+Built into the uploaded static site
+- HTTPS canonical origin: https://convertio.si/ (non-www).
+- HTTP and www requests are redirected to HTTPS non-www by public/.htaccess.
+  Confirm both DNS names point to this hosting account and the SSL certificate
+  covers convertio.si and www.convertio.si before relying on the redirect.
+- Individual home, policy and implemented-tool pages have canonical metadata,
+  page titles and descriptions. Tool routes also have matching visible FAQ,
+  breadcrumb and SoftwareApplication structured data; no ratings are invented.
+- /sitemap.xml lists only the homepage, public utility/legal pages and completed
+  tools. Coming-soon tools do not appear in the sitemap.
+- /robots.txt allows crawling and advertises the sitemap. /coming-soon/ is
+  crawlable so search engines can see its noindex directive; it is not in the
+  sitemap. Do not add a robots.txt disallow for a page that must be deindexed.
+- A favicon is included. English is the only complete UI language, so no Arabic
+  or French hreflang URLs are declared.
+
+After uploading to public_html
+1. Confirm https://convertio.si/ loads and the lock icon shows a valid TLS
+   certificate. Check that http://convertio.si/ and https://www.convertio.si/
+   end at https://convertio.si/.
+2. Open https://convertio.si/robots.txt and
+   https://convertio.si/sitemap.xml. Make sure they return 200 and show the
+   expected convertio.si URLs (not localhost, example.com or a preview host).
+3. Test a few canonical tags by viewing page source, for example the homepage
+   and /jpg-to-png/. Check that there is one canonical per page, pointing to
+   that exact page on https://convertio.si/.
+4. Add and verify the domain property in Google Search Console (DNS verification
+   is recommended), then submit https://convertio.si/sitemap.xml. Optionally
+   verify the site in Bing Webmaster Tools and submit the same sitemap.
+5. Use the search consoles' URL inspection tools for the homepage and a few
+   important tool pages. Fix any reported hosting, redirect or robots errors.
+   Indexing can take time; requesting a crawl is not a guarantee of inclusion.
+
+SEO cannot guarantee a ranking or immediate indexing. Search engines decide
+what and when to index. Keep the site reachable over HTTPS, avoid blocking its
+CSS/JS/vendor assets, and update the sitemap by rebuilding after route changes.
+The site owner should also review their own domain's existing pages and avoid
+publishing competing duplicate URLs on another host.

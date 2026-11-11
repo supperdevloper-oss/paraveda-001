@@ -1,0 +1,8 @@
+import type { Metadata } from 'next';
+import { READY_TOOLS, readyToolsByCategory } from '@/lib/tools/registry';
+import { ToolCard } from '@/components/site-shell';
+import { SITE, siteUrl } from '@/lib/site-config';
+const pageTitle='All File Tools';
+const pageDescription=`Browse ${READY_TOOLS.length} working file conversion and compression tools.`;
+export const metadata:Metadata={title:pageTitle,description:pageDescription,alternates:{canonical:siteUrl('/tools/')},openGraph:{title:`${pageTitle} | ${SITE.name}`,description:pageDescription,url:siteUrl('/tools/'),siteName:SITE.name,type:'website',images:[{url:'/og-image.png',width:1200,height:630,alt:`${SITE.name} — free file tools`}]},twitter:{card:'summary_large_image',title:`${pageTitle} | ${SITE.name}`,description:pageDescription,images:['/og-image.png']}};
+export default function ToolsPage(){return <div className="cf-container cf-directory"><header className="cf-page-heading"><span className="cf-eyebrow">THE TOOLBOX</span><h1>All file tools</h1><p>{READY_TOOLS.length} working tools for images, PDFs, audio and video. Unavailable features are kept separate so every tool here can actually run.</p></header>{readyToolsByCategory().map(({category,tools})=><section className="cf-directory-group" id={category.id} key={category.id}><div className="cf-section-heading"><div><span className="cf-eyebrow">{category.label.toUpperCase()}</span><h2>{category.label}</h2></div><span className="cf-badge cf-badge-gray">{tools.length} tools</span></div><p className="cf-category-blurb">{category.blurb}</p><div className="cf-tools-grid">{tools.map(t=><ToolCard key={t.slug} tool={t}/>)}</div></section>)}</div>}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+ <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f8ff"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b7bf6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs>
+ <rect width="1200" height="630" fill="url(#bg)"/>
+ <circle cx="1040" cy="90" r="230" fill="#e8efff"/><circle cx="1100" cy="600" r="250" fill="#f1f5ff"/>
+ <rect x="92" y="100" width="60" height="60" rx="17" fill="url(#brand)"/>
+ <path d="M108 118h24a9 9 0 0 1 0 18h-16v8h-8zm8 8v4h16a2 2 0 0 0 0-4z" fill="#fff"/>
+ <text x="172" y="142" fill="#12161c" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="3">FREE FILE TOOLS</text>
+ <text x="92" y="300" fill="#12161c" font-family="Arial, sans-serif" font-size="68" font-weight="700">Convert Your Files</text>
+ <text x="92" y="382" fill="#12161c" font-family="Arial, sans-serif" font-size="68" font-weight="700">for Free</text>
+ <text x="96" y="448" fill="#4a5260" font-family="Arial, sans-serif" font-size="27">Image · PDF · Video · Audio tools</text>
+ <rect x="94" y="495" width="362" height="56" rx="14" fill="#eff5ff" stroke="#dbe8fe"/>
+ <text x="118" y="532" fill="#1d4ed8" font-family="Arial, sans-serif" font-size="23" font-weight="600">Processed in your browser</text>
+ <rect x="862" y="230" width="220" height="142" rx="22" fill="#fff" stroke="#dbe8fe" stroke-width="3"/>
+ <rect x="895" y="264" width="54" height="54" rx="15" fill="#eff5ff"/><path d="M910 292h22m-8-8 8 8-8 8" stroke="#2563eb" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <rect x="970" y="264" width="78" height="12" rx="6" fill="#ccd2dc"/><rect x="970" y="288" width="54" height="10" rx="5" fill="#e3e6ec"/>
+ <rect x="862" y="394" width="220" height="112" rx="22" fill="#fff" stroke="#e3e6ec" stroke-width="3"/>
+ <rect x="894" y="424" width="52" height="52" rx="14" fill="#ecfdf3"/><path d="m907 450 10 10 18-22" stroke="#15803d" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="968" y="431" width="80" height="11" rx="5.5" fill="#ccd2dc"/><rect x="968" y="453" width="56" height="10" rx="5" fill="#e3e6ec"/>
+</svg>
