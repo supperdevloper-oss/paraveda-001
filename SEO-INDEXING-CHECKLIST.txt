@@ -13,8 +13,10 @@ Built into the uploaded static site
 - /robots.txt allows crawling and advertises the sitemap. /coming-soon/ is
   crawlable so search engines can see its noindex directive; it is not in the
   sitemap. Do not add a robots.txt disallow for a page that must be deindexed.
-- A favicon is included. English is the only complete UI language, so no Arabic
-  or French hreflang URLs are declared.
+- A favicon and optional llms.txt reference are included. English is the only
+  complete UI language, so no Arabic or French hreflang URLs are declared.
+- Public contact email is hello@convertio.si. Media uploads are capped at 200 MB;
+  actual browser/device memory limits can still be lower.
 
 After uploading to public_html
 1. Confirm https://convertio.si/ loads and the lock icon shows a valid TLS

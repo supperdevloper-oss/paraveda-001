@@ -83,12 +83,12 @@ export const SITE: SiteConfig = {
     process.env.NEXT_PUBLIC_SITE_TAGLINE?.trim() ||
     'Free file conversion and compression, processed in your browser.',
   description:
-    'Convert and compress images, PDFs, video and audio for free. Files are processed inside your browser and never uploaded to a server. No sign-up, no watermark, no file-size paywall.',
+    'Free online file converter for images, PDFs, video and audio. Convert in your browser with no sign-up or watermark, and keep your files on your device.',
   // Canonical origin of the user's production site; override at build time if needed.
   url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://convertio.si').replace(/\/+$/, ''),
   defaultLocale: 'en',
   locales: ['en', 'ar', 'fr'] as const,
-  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || '',
+  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || 'hello@convertio.si',
   links: {
     sourceRepository: '',
     status: '',
@@ -96,7 +96,7 @@ export const SITE: SiteConfig = {
   copyrightYear: new Date().getFullYear(),
   limits: {
     maxInputBytes: num(process.env.NEXT_PUBLIC_MAX_INPUT_MB, 1024) * MB,
-    maxMediaInputBytes: num(process.env.NEXT_PUBLIC_MAX_MEDIA_MB, 512) * MB,
+    maxMediaInputBytes: num(process.env.NEXT_PUBLIC_MAX_MEDIA_MB, 200) * MB,
     maxPdfInputBytes: num(process.env.NEXT_PUBLIC_MAX_PDF_MB, 200) * MB,
     maxImageInputBytes: num(process.env.NEXT_PUBLIC_MAX_IMAGE_MB, 64) * MB,
     maxFilesPerRun: num(process.env.NEXT_PUBLIC_MAX_FILES, 20),

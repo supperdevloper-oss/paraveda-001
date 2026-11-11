@@ -63,14 +63,14 @@ All settings are optional. Defaults live in `src/lib/site-config.ts`; **change t
 
 | Variable | Default | Purpose |
 |---|---:|---|
-| `NEXT_PUBLIC_SITE_NAME` | `ConvertFlow` | Branding shown across the site |
+| `NEXT_PUBLIC_SITE_NAME` | `Convertio` | Branding shown across the site |
 | `NEXT_PUBLIC_SITE_TAGLINE` | built-in text | Short brand statement |
 | `NEXT_PUBLIC_SITE_URL` | `https://convertio.si` | Canonical URL and sitemap origin; set to the preferred deployed origin |
-| `NEXT_PUBLIC_SUPPORT_EMAIL` | empty | Optional contact address shown on legal pages |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | `hello@convertio.si` | Public contact address shown on legal pages |
 | `NEXT_PUBLIC_MAX_INPUT_MB` | `1024` | Global maximum accepted by the registry |
 | `NEXT_PUBLIC_MAX_IMAGE_MB` | `64` | Image input limit |
 | `NEXT_PUBLIC_MAX_PDF_MB` | `200` | PDF input limit |
-| `NEXT_PUBLIC_MAX_MEDIA_MB` | `512` | Media input limit; practical browser ceiling is often lower (~300 MB or less) |
+| `NEXT_PUBLIC_MAX_MEDIA_MB` | `200` | Media file-picker limit; actual browser memory limits can still be lower |
 | `NEXT_PUBLIC_MAX_FILES` | `20` | Maximum queued files (individual tools may set smaller limits) |
 | `NEXT_PUBLIC_MEDIA_TIMEOUT_MIN` | `30` | FFmpeg job timeout |
 | `NEXT_PUBLIC_ENABLE_MEDIA_TOOLS` | `1` | Set to `0` to hide FFmpeg tools |

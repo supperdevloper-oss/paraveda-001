@@ -11,7 +11,7 @@ const ready = [
   'pdf-to-jpg','merge-pdf','split-pdf','rotate-pdf','delete-pdf-pages','mp4-to-mp3',
   'mov-to-mp4','wav-to-mp3','video-compressor','audio-compressor','video-to-gif',
 ];
-for (const route of ['index.html','tools/index.html','about/index.html','privacy/index.html','terms/index.html','coming-soon/index.html','robots.txt','sitemap.xml','workers/image.worker.js','vendor/pdfjs/pdf.worker.min.mjs','vendor/ffmpeg/esm/worker.js','vendor/ffmpeg/core/ffmpeg-core.js','vendor/ffmpeg/core/ffmpeg-core.wasm','.htaccess','favicon.svg','og-image.png']) {
+for (const route of ['index.html','tools/index.html','about/index.html','privacy/index.html','terms/index.html','coming-soon/index.html','robots.txt','sitemap.xml','llms.txt','workers/image.worker.js','vendor/pdfjs/pdf.worker.min.mjs','vendor/ffmpeg/esm/worker.js','vendor/ffmpeg/core/ffmpeg-core.js','vendor/ffmpeg/core/ffmpeg-core.wasm','.htaccess','favicon.svg','og-image.png']) {
   assert(await exists(route), `Missing static export asset: ${route}`);
 }
 for (const slug of ready) assert(await exists(`${slug}/index.html`), `Missing ready tool route: ${slug}`);
@@ -19,7 +19,25 @@ for (const slug of ['docx-to-pdf','pdf-to-word','heic-to-jpg','pdf-compressor','
   assert(!(await exists(`${slug}/index.html`)), `Coming-soon tool must not have an indexed route: ${slug}`);
 }
 const html = await readFile(path.join(root,'index.html'),'utf8');
-assert.match(html, /Convert Your Files for Free/);
+assert.match(html, /Free Online File Converter/);
+assert.match(html, /aria-label=\"Choose files from your device\"/);
+const title = html.match(/<title>(.*?)<\/title>/)?.[1] ?? '';
+const description = html.match(/<meta name=\"description\" content=\"([^\"]+)\"/)?.[1] ?? '';
+assert(title.length >= 50 && title.length <= 60, `Homepage title should be 50–60 characters; got ${title.length}`);
+assert(description.length >= 120 && description.length <= 160, `Homepage meta description should be 120–160 characters; got ${description.length}`);
+const structuredData=[...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map(([,json])=>JSON.parse(json));
+assert(structuredData.flat().some(item=>item['@type']==='Organization'&&item.email==='hello@convertio.si'), 'Organization schema must include the verified contact email');
+const apache=await readFile(path.join(root,'.htaccess'),'utf8');
+assert(apache.includes('max-age=31536000, immutable'), 'Hashed Next.js assets should receive long-lived cache headers');
+for (const legalRoute of ['privacy','terms']) {
+  const legal = await readFile(path.join(root,`${legalRoute}/index.html`),'utf8');
+  assert(legal.includes('hello@convertio.si'),`${legalRoute} must show the verified support address`);
+}
+for (const route of ['mp4-to-mp3','mov-to-mp4','video-compressor']) {
+  const mediaPage = await readFile(path.join(root,`${route}/index.html`),'utf8');
+  assert(mediaPage.includes('200 MB'),`${route} must display the updated 200 MB media cap`);
+  assert(!mediaPage.includes('512 MB'),`${route} must not advertise the old media cap`);
+}
 const robots = await readFile(path.join(root,'robots.txt'),'utf8');
 assert.match(robots, /Allow: \/\s*$/m);
 assert.doesNotMatch(robots, /Disallow: \/coming-soon\//);

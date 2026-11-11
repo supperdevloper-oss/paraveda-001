@@ -231,7 +231,7 @@ export const MEDIA_TOOLS: ToolDefinition[] = [
       },
       {
         q: 'How big a video can I convert?',
-        a: `The hard input limit is ${Math.round(LIMITS.media / 1048576)} MB, but the practical limit is the ~2 GB WebAssembly address space shared by the core, the input and the output. In practice keep videos under about 300 MB and under a few minutes for a comfortable wait.`,
+        a: `The hard input limit is ${Math.round(LIMITS.media / 1048576)} MB. The WebAssembly engine, input and output share roughly 2 GB of address space, so jobs near the file limit can still fail on a low-memory device. For better reliability, try shorter clips and smaller files, especially on phones.`,
       },
     ],
     related: ['mp4-to-mp3', 'video-compressor', 'video-to-gif'],

@@ -191,7 +191,7 @@ export function canvasNotes(extra: string[] = []): string[] {
 export function ffmpegNotes(extra: string[] = []): string[] {
   return [
     'Runs on ffmpeg compiled to WebAssembly, single-threaded, inside this tab. Expect roughly 0.3–2× realtime on a laptop and considerably slower on a phone.',
-    'The wasm sandbox has a ~2 GB address space shared with the input and output buffers. Inputs above ~300 MB will often fail with an out-of-memory error.',
+    `The file picker limit is ${Math.round(LIMITS.media / 1048576)} MB. The wasm sandbox has roughly 2 GB shared by the engine, input and output buffers, so large files can still run out of memory below the limit—especially on phones.`,
     'Only codecs compiled into the bundled ffmpeg core are available. DRM-protected sources cannot be decoded, and support for HEVC/H.265 or ProRes varies by codec profile and file — a failed decode is reported rather than guessed.',
     'The 32 MB ffmpeg core is downloaded once and cached by your browser. Nothing is uploaded.',
     ...extra,

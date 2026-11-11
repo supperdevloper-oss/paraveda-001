@@ -1,10 +1,13 @@
-# ConvertFlow static export for Apache/cPanel.
+# Convertio static export for Apache/cPanel.
 # Canonical host is https://convertio.si (non-www). Ensure DNS and SSL cover both
 # the apex and www host before enabling these redirects.
 RewriteEngine On
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.convertio\.si$ [NC]
 RewriteRule ^ https://convertio.si%{REQUEST_URI} [R=301,L]
+
+# Next.js static asset paths contain build-specific names; safe for long caching.
+RewriteRule ^_next/static/ - [E=NEXT_STATIC:1]
 
 AddType application/wasm .wasm
 AddType text/javascript .mjs
@@ -16,4 +19,6 @@ AddType application/json .json
     Header set Cache-Control "public, max-age=604800"
     Header set X-Content-Type-Options "nosniff"
   </FilesMatch>
+  # Build-specific Next.js chunks and styles can be cached until the next deploy.
+  Header set Cache-Control "public, max-age=31536000, immutable" env=NEXT_STATIC
 </IfModule>

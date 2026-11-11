@@ -1,0 +1,45 @@
+# Convertio
+
+> Free browser-based tools for converting and organizing image, PDF, audio, and video files. Files are processed locally in the visitor's browser; no conversion backend receives the selected files.
+
+## Main pages
+- [Home](https://convertio.si/): Free online file converter and overview of browser-based tools.
+- [All working tools](https://convertio.si/tools/): Directory of available converters and utilities.
+- [About](https://convertio.si/about/): How the tools work and their limitations.
+- [Privacy](https://convertio.si/privacy/): File handling, temporary browser storage, and hosting-provider data.
+- [Terms](https://convertio.si/terms/): Usage and compatibility limitations.
+
+## Working tools
+### Images
+- [JPG to PNG](https://convertio.si/jpg-to-png/)
+- [PNG to JPG](https://convertio.si/png-to-jpg/)
+- [WebP to JPG](https://convertio.si/webp-to-jpg/)
+- [WebP to PNG](https://convertio.si/webp-to-png/)
+- [JPG to WebP](https://convertio.si/jpg-to-webp/)
+- [PNG to WebP](https://convertio.si/png-to-webp/)
+- [Image Compressor](https://convertio.si/image-compressor/)
+- [Image Resizer](https://convertio.si/image-resizer/)
+- [Crop Image](https://convertio.si/crop-image/)
+- [Rotate Image](https://convertio.si/rotate-image/)
+
+### PDF
+- [JPG to PDF](https://convertio.si/jpg-to-pdf/)
+- [PNG to PDF](https://convertio.si/png-to-pdf/)
+- [PDF to JPG](https://convertio.si/pdf-to-jpg/)
+- [Merge PDF](https://convertio.si/merge-pdf/)
+- [Split PDF](https://convertio.si/split-pdf/)
+- [Rotate PDF](https://convertio.si/rotate-pdf/)
+- [Delete PDF Pages](https://convertio.si/delete-pdf-pages/)
+
+### Audio and video
+- [MP4 to MP3](https://convertio.si/mp4-to-mp3/)
+- [MOV to MP4](https://convertio.si/mov-to-mp4/)
+- [WAV to MP3](https://convertio.si/wav-to-mp3/)
+- [Video Compressor](https://convertio.si/video-compressor/)
+- [Audio Compressor](https://convertio.si/audio-compressor/)
+- [Video to GIF](https://convertio.si/video-to-gif/)
+
+## Important limitations
+- Processing is local to the browser; browser memory, supported codecs, and device performance affect results.
+- The media file picker has a 200 MB limit. Files near the limit may still fail on low-memory devices.
+- The coming-soon list describes unavailable features and should not be treated as working tools.
